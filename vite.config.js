@@ -11,5 +11,6 @@ export default defineConfig({
 
     babel({ presets: [reactCompilerPreset()] })
   ],
-  base: '/Mercedes-AMG-F1/',
+  // base: '/Mercedes-AMG-F1/',
+  base: '/',
 })
