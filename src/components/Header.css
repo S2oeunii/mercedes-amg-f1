@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap');
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    padding: 1.04vw 5.21vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: #000; */
+}
+
+.logo {
+    width: 8.33vw;
+    height: auto;
+}
+
+.nav {
+    display: flex;
+    gap: 2.6vw;
+    font-family: 'archivo', sans-serif;
+    font-weight: 600;
+    font-size: 1.25vw;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: #fff;
+}
+
+.nav li {
+    list-style: none;
+    padding: 0.1vw 0;
+    position: relative;
+}
+
+.nav li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.1vw;
+    width: 0;
+    height: 0.16vw;
+    background: linear-gradient(to right, #00F4D0, #C0C7CE);
+    transition: width 0.3s ease-out;
+}
+
+.nav li:hover::after {
+    width: 100%;
+}

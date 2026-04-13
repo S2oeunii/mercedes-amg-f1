@@ -1,0 +1,162 @@
+/* HERO
+============================*/
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 25.5vw 5.2vw 5.2vw 5.2vw;
+    /* background-color: #000; */
+    transition: background-image 0.5s ease;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero .bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: .8;
+  transform: translateY(5%);
+  transition: 
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+  will-change: transform, opacity;
+  z-index: -1;
+}
+
+.bg-1 {
+  background-image: url('./assets/img/Hero_KeyVisual-1.jpg');
+}
+.bg-2 {
+  background-image: url('./assets/img/Hero_KeyVisual-2.jpg');
+}
+.bg-3 {
+  background-image: url('./assets/img/Hero_KeyVisual-3.jpg');
+}
+
+.bg.active {
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 2;
+}
+
+.bg.prev {
+  opacity: 1;
+  transform: translateY(-5%);
+  z-index: 1;
+}
+
+.hero-title, .topScroll {
+    position: relative;
+    z-index: 100;
+}
+
+.hero .hero-title {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900; /* Black */
+    font-size: clamp(40px, 5.2vw, 100px);
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.hero-title span {
+  transition: 
+    color 0.5s ease,
+    -webkit-text-stroke 0.5s ease-out,
+    opacity 0.5s ease;
+}
+
+.fill-white {
+  color: #fff;
+  -webkit-text-stroke: 0;
+}
+
+.fill-mint {
+  color: #00F4D0;
+  -webkit-text-stroke: 0;
+}
+
+.stroke-white {
+  color: transparent;
+  -webkit-text-stroke: 0.05vw #fff;
+}
+
+.stroke-mint {
+  color: transparent;
+  -webkit-text-stroke: 0.05vw #00F4D0;
+}
+
+.hero .topScroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.31vw;
+    cursor: pointer;
+}
+
+.topScroll .text {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500; /* Medium */
+    font-size: 0.83vw;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+.topScroll .pill {
+    width: 2.6vw;
+    height: 6.51vw;
+    border: 0.1vw solid #fff;
+    border-radius: 2.6vw;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease-out;
+}
+
+.pill .bg-circle {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background: rgba(255,255,255,0.5);
+    border-radius: 1.3vw;
+    top: 0;
+    animation: moveUpDown 1.5s ease-in-out infinite;
+    transition: opacity 0.3s ease-out;
+}
+
+.pill .arrow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1.35vw;
+    height: auto;
+}
+
+@keyframes moveUpDown {
+  0% { top: 0; }
+  50% { top: 50%; }
+  100% { top: 0; }
+}
+
+.topScroll:hover .pill {
+  background: linear-gradient(to bottom, #00F4D0, #008E79);
+  border: none;
+}
+
+.topScroll:hover .text {
+  color: #00F4D0;
+}
+
+.topScroll:hover .bg-circle {
+  opacity: 0;
+}
+
+
+/* TEAM
+============================*/
