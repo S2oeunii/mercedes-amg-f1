@@ -28,23 +28,23 @@
   z-index: -1;
 }
 
-.bg-1 {
+.hero .bg-1 {
   background-image: url('./assets/img/Hero_KeyVisual-1.jpg');
 }
-.bg-2 {
+.hero .bg-2 {
   background-image: url('./assets/img/Hero_KeyVisual-2.jpg');
 }
-.bg-3 {
+.hero .bg-3 {
   background-image: url('./assets/img/Hero_KeyVisual-3.jpg');
 }
 
-.bg.active {
+.hero .bg.active {
   opacity: 1;
   transform: translateY(0);
   z-index: 2;
 }
 
-.bg.prev {
+.hero .bg.prev {
   opacity: 1;
   transform: translateY(-5%);
   z-index: 1;

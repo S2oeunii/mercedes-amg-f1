@@ -76,6 +76,14 @@ function App() {
       </section>
 
       <section className='team' ref={teamRef}>
+        <div className='overview'>
+          <span className='section-title'>Team Overview</span>
+          <h1 className='team-slogan'>
+            Precison.<br />
+            <p>Performance.</p>
+            <br />Legacy.
+          </h1>
+        </div>
       </section>
     </>
   )
