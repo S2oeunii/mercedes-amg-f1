@@ -44,3 +44,13 @@
 @utility title-transition {
   transition: color 0.5s ease, -webkit-text-stroke 0.5s ease-out, opacity 0.5s ease;
 }
+
+/* 모바일 팝업 nav: 393px 이하에서 hover 시 밑줄 제거 + 민트색 */
+@media (max-width: 393px) {
+  .popup-nav-link:hover {
+    color: #00F4D0 !important;
+  }
+  .popup-nav-link:hover::after {
+    width: 0 !important;
+  }
+}
