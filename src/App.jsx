@@ -65,7 +65,7 @@ function App() {
           </span>
         </h1>
 
-        <div className="topScroll" onClick={handleScroll}>
+        <div className="scrollDown" onClick={handleScroll}>
           <span className="text">SCROLL<br />DOWN</span>
           
           <div className="pill">

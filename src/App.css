@@ -90,7 +90,7 @@
   -webkit-text-stroke: 0.05vw #00F4D0;
 }
 
-.hero .topScroll {
+.hero .scrollDown {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,7 +98,7 @@
     cursor: pointer;
 }
 
-.topScroll .text {
+.scrollDown .text {
     font-family: 'Pretendard', sans-serif;
     font-weight: 500; /* Medium */
     font-size: 0.83vw;
@@ -108,7 +108,7 @@
     text-align: center;
 }
 
-.topScroll .pill {
+.scrollDown .pill {
     width: 2.6vw;
     height: 6.51vw;
     border: 0.1vw solid #fff;
@@ -144,16 +144,16 @@
   100% { top: 0; }
 }
 
-.topScroll:hover .pill {
+.scrollDown:hover .pill {
   background: linear-gradient(to bottom, #00F4D0, #008E79);
   border: none;
 }
 
-.topScroll:hover .text {
+.scrollDown:hover .text {
   color: #00F4D0;
 }
 
-.topScroll:hover .bg-circle {
+.scrollDown:hover .bg-circle {
   opacity: 0;
 }
 
