@@ -12,6 +12,14 @@
     50%  { top: 50%; }
     100% { top: 0%; }
   }
+
+  /* scan line 빛 애니메이션 */
+  --animate-scan-light: scanLight 3.8s ease-in-out infinite;
+  @keyframes scanLight {
+    0%   { top: -12%; }
+    50%  { top: 105%; }
+    100% { top: -12%; }
+  }
 }
 
 /* -webkit-text-stroke은 Tailwind가 지원하지 않아 직접 정의 */

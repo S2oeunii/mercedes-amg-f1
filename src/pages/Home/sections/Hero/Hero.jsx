@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import arrowDown from '../../../../assets/icons/arrowDown.svg';
-import bg1 from '../../../../assets/img/Hero_KeyVisual-1.jpg';
-import bg2 from '../../../../assets/img/Hero_KeyVisual-2.jpg';
-import bg3 from '../../../../assets/img/Hero_KeyVisual-3.jpg';
+import bg1 from '../../../../assets/img/hero/Hero_KeyVisual-1.jpg';
+import bg2 from '../../../../assets/img/hero/Hero_KeyVisual-2.jpg';
+import bg3 from '../../../../assets/img/hero/Hero_KeyVisual-3.jpg';
 
 const bgImages = [bg1, bg2, bg3];
 

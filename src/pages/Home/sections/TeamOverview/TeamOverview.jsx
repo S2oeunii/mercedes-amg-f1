@@ -1,4 +1,7 @@
 import { forwardRef, useEffect, useRef } from 'react';
+import precision from '../../../../assets/img/team/precision.png';
+import performance from '../../../../assets/img/team/performance.png';
+import legacy from '../../../../assets/img/team/legacy.png';
 import MoreView from '../../../../components/buttons/MoreView';
 
 const TeamOverview = forwardRef(({ onScrollUp, isActive }, ref) => {
@@ -22,7 +25,7 @@ const TeamOverview = forwardRef(({ onScrollUp, isActive }, ref) => {
   }, [isActive, onScrollUp]);
 
   return (
-    <section className="bg-[#000] pt-45 pb-50 w-full flex flex-col items-center"
+    <div className="bg-[#000] pt-45 pb-50 w-full flex flex-col items-center gap-25 lg:gap-75"
       ref={ref}
     >
       <section className='overview w-full lg:w-[1360px] px-12 lg:px-0'>
@@ -46,13 +49,55 @@ const TeamOverview = forwardRef(({ onScrollUp, isActive }, ref) => {
               </p>
             </div>
 
-            <div className='w-40 h-80 bg-red-500'></div>
+            <div className='imgWrapper relative
+              w-[345px] lg:w-[670px] h-[300px] lg:h-[700px]
+              flex justify-center items-center overflow-hidden'
+            >
+              {/* 장식용 세로 선 3개 + 빛 애니메이션 */}
+              {[
+                { left: '15.67%', delay: '0s' },
+                { left: '50%',    delay: '0.3s' },
+                { left: '84.33%', delay: '0.6s' },
+              ].map(({ left, delay }, i) => (
+                <div
+                  key={i}
+                  className="absolute top-0 h-full w-px bg-[#00F4D0]/15 pointer-events-none"
+                  style={{ left }}
+                >
+                  <div
+                    className="absolute w-0.5 h-[70px] -translate-x-px animate-scan-light"
+                    style={{ animationDelay: delay }}
+                  >
+                    <div className="w-full h-full rounded-full
+                      bg-gradient-to-b from-transparent via-[#00F4D0] to-transparent
+                      shadow-[0_0_10px_4px_rgba(0,244,208,0.35)]"
+                    />
+                  </div>
+                </div>
+              ))}
+
+              <ul className='imgContainer relative z-10 flex gap-5'>
+                <li><img className='w-[210px] h-auto'
+                  src={precision} alt="Precision"
+                /></li>
+                <li><img className='w-[210px] h-auto'
+                  src={performance} alt="Performance"
+                /></li>
+                <li><img className='w-[210px] h-auto'
+                  src={legacy} alt="Legacy"
+                /></li>
+              </ul>
+            </div>
           </div>
 
           <MoreView />
         </div>
       </section>
-    </section>
+
+      <section className='drivers'>
+
+      </section>
+    </div>
   );
 });
 
