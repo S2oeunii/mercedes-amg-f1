@@ -51,7 +51,7 @@ const TeamOverview = forwardRef(({ onScrollUp, isActive }, ref) => {
             </div>
 
             <div className='imgWrapper relative
-              w-[345px] lg:w-[670px] h-[300px] lg:h-[700px]
+              lg:w-[670px] lg:h-[700px]
               flex justify-center items-center overflow-hidden'
             >
               {/* 장식용 세로 선 3개 + 빛 애니메이션 */}
@@ -77,14 +77,14 @@ const TeamOverview = forwardRef(({ onScrollUp, isActive }, ref) => {
                 </div>
               ))}
 
-              <ul className='imgContainer relative z-10 flex gap-5'>
-                <li><img className='w-[210px] h-auto'
+              <ul className='imgContainer relative z-10 flex gap-[10px] lg:gap-[20px]'>
+                <li><img className='w-[108px] lg:w-[210px] h-auto'
                   src={precision} alt="Precision"
                 /></li>
-                <li><img className='w-[210px] h-auto'
+                <li><img className='w-[108px] lg:w-[210px] h-auto'
                   src={performance} alt="Performance"
                 /></li>
-                <li><img className='w-[210px] h-auto'
+                <li><img className='w-[108px] lg:w-[210px] h-auto'
                   src={legacy} alt="Legacy"
                 /></li>
               </ul>
