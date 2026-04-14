@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Hero from './sections/Hero/Hero';
 import TeamOverview from './sections/TeamOverview/TeamOverview';
 
@@ -7,15 +7,22 @@ function Home() {
   const [heroStep, setHeroStep] = useState(0);
   const [activeSection, setActiveSection] = useState('hero');
 
+  // 스크롤 위치로 activeSection 자동 감지
+  // → Hero 휠 핸들러가 TeamOverview에서 돌아왔을 때도 정상 작동
+  useEffect(() => {
+    const onScroll = () => {
+      if (!teamRef.current) return;
+      const inTeam = window.scrollY >= teamRef.current.offsetTop - window.innerHeight * 0.5;
+      setActiveSection(inTeam ? 'team' : 'hero');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const handleScrollToTeam = () => {
     setActiveSection('team');
     teamRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleScrollToHero = () => {
-    setHeroStep(2);
-    setActiveSection('hero');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -26,11 +33,7 @@ function Home() {
         setStep={setHeroStep}
         isActive={activeSection === 'hero'}
       />
-      <TeamOverview
-        ref={teamRef}
-        onScrollUp={handleScrollToHero}
-        isActive={activeSection === 'team'}
-      />
+      <TeamOverview ref={teamRef} />
     </>
   );
 }

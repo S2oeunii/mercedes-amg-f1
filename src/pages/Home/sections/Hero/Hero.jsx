@@ -6,12 +6,6 @@ import bg3 from '../../../../assets/img/hero/Hero_KeyVisual-3.jpg';
 
 const bgImages = [bg1, bg2, bg3];
 
-const getBgClass = (step, bgIndex) => {
-  if (step === bgIndex) return 'opacity-100 translate-y-0 z-[2]';
-  if (step > bgIndex)  return 'opacity-100 -translate-y-[5%] z-[1]';
-  return 'opacity-80 translate-y-[5%] -z-[1]';
-};
-
 function Hero({ onScrollDown, step, setStep, isActive }) {
   const isScrolling = useRef(false);
   const stepRef = useRef(step);
@@ -50,14 +44,23 @@ function Hero({ onScrollDown, step, setStep, isActive }) {
   return (
     <section className="flex justify-between items-end pt-[25.5vw] px-[5.2vw] pb-[5.2vw] relative overflow-hidden">
 
-      {/* 배경 슬라이드 */}
-      {bgImages.map((img, i) => (
-        <div
-          key={i}
-          className={`absolute inset-0 bg-cover bg-center [will-change:transform,opacity] [transition:opacity_0.5s_ease-out,transform_0.5s_ease-out] ${getBgClass(step, i)}`}
-          style={{ backgroundImage: `url(${img})` }}
-        />
-      ))}
+      {/* 가로 슬라이드 배경 — 이미지 3장이 이어진 1열로 배치 */}
+      <div
+        className="absolute inset-0 flex"
+        style={{
+          width: `${bgImages.length * 100}vw`,
+          transform: `translateX(-${step * 100}vw)`,
+          transition: 'transform 0.85s cubic-bezier(0.77, 0, 0.175, 1)',
+        }}
+      >
+        {bgImages.map((img, i) => (
+          <div
+            key={i}
+            className="h-full bg-cover bg-center flex-shrink-0"
+            style={{ width: '100vw', backgroundImage: `url(${img})` }}
+          />
+        ))}
+      </div>
 
       {/* 타이틀 */}
       <h1 className="font-archivo font-black text-[clamp(40px,5.2vw,100px)] leading-none relative z-[100]">
