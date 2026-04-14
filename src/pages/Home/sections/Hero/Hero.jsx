@@ -83,9 +83,19 @@ function Hero({ onScrollDown, step, setStep, isActive }) {
           SCROLL<br />DOWN
         </span>
 
-        <div className="w-[2.6vw] h-[6.51vw] border border-white rounded-[2.6vw] relative overflow-hidden transition-all duration-300 ease-out group-hover:bg-gradient-to-b group-hover:from-[#00F4D0] group-hover:to-[#008E79] group-hover:border-0">
-          <div className="absolute w-full h-1/2 bg-white/50 rounded-[1.3vw] top-0 animate-pill transition-opacity duration-300 group-hover:opacity-0" />
-          <img src={arrowDown} className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[1.35vw] h-auto" alt="scroll down" />
+        <div className="w-[2.6vw] h-[6.51vw]
+          border border-white rounded-[2.6vw]
+          relative overflow-hidden
+          transition-colors duration-[300ms] ease-out
+          group-hover:border-transparent
+          before:absolute before:inset-0
+          before:bg-gradient-to-b before:from-[#00F4D0] before:to-[#008E79]
+          before:scale-y-0 before:origin-top
+          group-hover:before:scale-y-100
+          before:transition-transform before:duration-[300ms] before:ease-out"
+        >
+          <div className="z-10 absolute w-full h-1/2 bg-white/50 rounded-[1.3vw] top-0 animate-pill transition-opacity duration-300 group-hover:opacity-0" />
+          <img src={arrowDown} className="z-10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[1.35vw] h-auto" alt="scroll down" />
         </div>
       </div>
 
