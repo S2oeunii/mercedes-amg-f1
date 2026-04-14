@@ -44,8 +44,8 @@ const TeamOverview = forwardRef(({ onScrollUp, isActive }, ref) => {
               </h1>
 
               <p className='text-[#C0C7CE] font-pretendard font-light text-[14px] lg:text-[20px] leading-normal tracking-tight'>
-                독일을 대표하는 메르세데스-AMG 페트로나스 포뮬러 원 팀은<br />
-                수십 년의 레이싱 헤리티지를 바탕으로<br className="lg:hidden" /> 최첨단 기술력과  정밀한 엔지니어링을 결합해,<br />
+                독일을 대표하는 메르세데스-AMG 페트로나스<br className="lg:hidden" />포뮬러 원 팀은<br />
+                수십 년의 레이싱 헤리티지를 바탕으로 최첨단 기술력과<br className="lg:hidden" />정밀한 엔지니어링을 결합해,<br />
                 퍼포먼스의 한계를 끊임없이 확장해 나갑니다.
               </p>
             </div>
@@ -101,10 +101,13 @@ const TeamOverview = forwardRef(({ onScrollUp, isActive }, ref) => {
         <div className='profiles w-full flex flex-col lg:flex-row gap-62.5 mx-auto mt-25'>
           <div className='driver1'>
             <div className='flex flex-col gap-[11px]'>
-              <p className='font-archivo font-bold text-[20px] lg:text-[40px] leading-none tracking-none'>George Russell</p>
-              <p>Main Driver<br />No.63</p>
-              <img className='w-[97px] lg:w-[158px] h-auto' src={arrow} alt="Arrow" />
+              <p className='text-white font-archivo font-bold text-[20px] lg:text-[40px] leading-none tracking-none'>George Russell</p>
+              <p className='text-[#C0C7CE] font-pretendard font-light text-[14px] lg:text-[25px] leading-normal tracking-none'>Main Driver<br />No.63</p>
+              <a className='cursor-pointer'>
+                <img className='w-[97px] lg:w-[158px] h-auto' src={arrow} alt="Arrow" />
+              </a>
             </div>
+            
           </div>
 
           <div className='driver2'></div>
