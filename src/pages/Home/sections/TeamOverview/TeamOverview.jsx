@@ -3,6 +3,7 @@ import precision from '../../../../assets/img/team/precision.png';
 import performance from '../../../../assets/img/team/performance.png';
 import legacy from '../../../../assets/img/team/legacy.png';
 import arrow from '../../../../assets/img/team/arrow.svg';
+import driver1 from '../../../../assets/img/team/driver1.png';
 import MoreView from '../../../../components/buttons/MoreView';
 
 const START_OFFSETS = [1.0, 1.15, 1.30];
@@ -163,7 +164,7 @@ const TeamOverview = forwardRef((_, ref) => {
                 <img className='w-[clamp(97px,_8.23vw,_158px)] h-auto' src={arrow} alt="Arrow" />
               </a>
             </div>
-
+            <img className='w-full h-auto' src={driver1} alt="George Russell" />
           </div>
 
           <div className='driver2'></div>
