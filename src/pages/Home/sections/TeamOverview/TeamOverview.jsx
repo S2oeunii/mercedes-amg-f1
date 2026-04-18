@@ -4,11 +4,14 @@ import performance from '../../../../assets/img/team/performance.png';
 import legacy from '../../../../assets/img/team/legacy.png';
 import arrow from '../../../../assets/img/team/arrow.svg';
 import driver1 from '../../../../assets/img/team/driver1.png';
+import driverHover1 from '../../../../assets/img/team/driverHover-1.png';
+import driver2 from '../../../../assets/img/team/driver2.png';
+import driverHover2 from '../../../../assets/img/team/driverHover-2.png';
 import MoreView from '../../../../components/buttons/MoreView';
 
 const START_OFFSETS = [1.0, 1.15, 1.30];
 
-const IMGS = [~
+const IMGS = [
   { src: precision,   alt: 'Precision'   },
   { src: performance, alt: 'Performance'  },
   { src: legacy,      alt: 'Legacy'       },
@@ -90,11 +93,11 @@ const TeamOverview = forwardRef((_, ref) => {
     <div className="bg-[#000] pt-45 pb-50 w-full flex flex-col items-center gap-25 lg:gap-[15.63vw]"
       ref={ref}
     >
-      <section className='overview w-full lg:w-[70.83vw] px-6 lg:px-0'>
+      <section className='overview w-full lg:w-[70.83vw] px-6 sm:px-[14.58vw] lg:px-0'>
         <span className="text-[#00F4D0]/70 font-pretendard font-semibold text-[clamp(14px,_1.35vw,_26px)] leading-none tracking-none">Team Overview</span>
 
         <div className='container w-full flex flex-col gap-[clamp(40px,_6.41vw,_123px)] justify-center items-center'>
-          <div className='w-full flex flex-col lg:flex-row gap-10 lg:gap-0 justify-between mx-auto mt-25'>
+          <div className='w-full flex flex-col sm:flex-row gap-10 lg:gap-0 justify-between mx-auto mt-25'>
             <div className='desc'>
               <h1 className="w-[clamp(255px,_33.13vw,_636px)] h-auto mb-10
                 text-[#fff] font-archivo font-bold italic text-[clamp(35px,_4.17vw,_80px)] leading-none tracking-none"
@@ -152,22 +155,53 @@ const TeamOverview = forwardRef((_, ref) => {
         </div>
       </section>
 
-      <section className='drivers w-full lg:w-[70.83vw] px-12 lg:px-0'>
+      <section className='drivers w-full lg:w-[70.83vw] px-6 sm:px-[14.58vw] lg:px-0'>
         <span className="text-[#00F4D0]/70 font-pretendard font-semibold text-[clamp(14px,_1.35vw,_26px)] leading-none tracking-none">Team Drivers</span>
 
-        <div className='profiles w-full flex flex-col lg:flex-row gap-62.5 mx-auto mt-25'>
-          <div className='driver1'>
-            <div className='flex flex-col gap-[11px]'>
+        <div className='profiles w-full flex flex-col md:flex-row gap-15 md:gap-[5.21vw] mx-auto mt-25'>
+          <div className='driver1 flex flex-col justify-between gap-[5vw]'>
+            <div className='flex flex-col gap-[0.57vw]'>
               <p className='text-white font-archivo font-bold text-[clamp(20px,_2.08vw,_40px)] leading-none tracking-none'>George Russell</p>
               <p className='text-[#C0C7CE] font-pretendard font-light text-[clamp(14px,_1.3vw,_25px)] leading-normal tracking-none'>Main Driver<br />No.63</p>
               <a className='cursor-pointer'>
                 <img className='w-[clamp(97px,_8.23vw,_158px)] h-auto' src={arrow} alt="Arrow" />
               </a>
             </div>
-            <img className='w-full h-auto' src={driver1} alt="George Russell" />
+            <div className='relative w-full cursor-pointer group'>
+              <img
+                className='w-full h-auto block'
+                src={driver1}
+                alt="George Russell"
+              />
+              <img
+                className='absolute inset-0 w-full h-auto block opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+                src={driverHover1}
+                alt="George Russell Hover"
+              />
+            </div>
           </div>
 
-          <div className='driver2'></div>
+          <div className='driver2 flex flex-col-reverse md:flex-col justify-between gap-[1.61vw]'>
+            <div className='relative w-full cursor-pointer group'>
+              <img
+                className='w-full h-auto block'
+                src={driver2}
+                alt="Kimi Antonelli"
+              />
+              <img
+                className='absolute inset-0 w-full h-auto block opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+                src={driverHover2}
+                alt="Kimi Antonelli Hover"
+              />
+            </div>
+            <div className='flex flex-col gap-[0.57vw]'>
+              <p className='text-white font-archivo font-bold text-[clamp(20px,_2.08vw,_40px)] leading-none tracking-none'>Kimi Antonelli</p>
+              <p className='text-[#C0C7CE] font-pretendard font-light text-[clamp(14px,_1.3vw,_25px)] leading-normal tracking-none'>Main Driver<br />No.12</p>
+              <a className='cursor-pointer'>
+                <img className='w-[clamp(97px,_8.23vw,_158px)] h-auto' src={arrow} alt="Arrow" />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
     </div>
