@@ -63,13 +63,13 @@ const Header = () => {
               <li key={label} className="list-none">
                 <Link
                   to={to}
-                  className="popup-nav-link text-white font-archivo font-semibold text-[40px] leading-none tracking-[-0.01em]
+                  className="popup-nav-link text-[#00F4D0] sm:text-white font-archivo font-semibold text-[40px] leading-none tracking-[-0.01em]
                     relative transition-colors duration-300
                     after:content-[''] after:absolute after:left-0 after:bottom-[-0.3rem]
                     after:w-0 after:h-[3px]
                     after:bg-gradient-to-r after:from-[#00F4D0] after:to-[#C0C7CE]
                     after:transition-[width] after:duration-300 after:ease-out
-                    hover:after:w-full"
+                    sm:hover:after:w-full"
                   onClick={() => setIsOpen(false)}
                 >
                   {label}

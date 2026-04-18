@@ -8,7 +8,7 @@ import MoreView from '../../../../components/buttons/MoreView';
 
 const START_OFFSETS = [1.0, 1.15, 1.30];
 
-const IMGS = [
+const IMGS = [~
   { src: precision,   alt: 'Precision'   },
   { src: performance, alt: 'Performance'  },
   { src: legacy,      alt: 'Legacy'       },
@@ -133,9 +133,9 @@ const TeamOverview = forwardRef((_, ref) => {
                 </div>
               ))}
 
-              <ul className='imgContainer bottom-0 z-10 flex gap-[clamp(10px,_1.04vw,_20px)]'>
+              <ul className='imgContainer bottom-0 z-10 flex w-full gap-[clamp(10px,_1.04vw,_20px)]'>
                 {IMGS.map(({ src, alt }, i) => (
-                  <li key={alt}>
+                  <li key={alt} className='flex-1 min-w-0'>
                     <img
                       ref={(el) => { imgNodesRef.current[i] = el; }}
                       className='w-[clamp(108px,_10.94vw,_210px)] h-auto block'
