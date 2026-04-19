@@ -53,14 +53,23 @@ const Car = () => {
 
   return (
     <div className='bg-black py-25 lg:pt-45 lg:pb-50 w-full flex flex-col items-center gap-4.48 lg:gap-[15.63vw]'>
-      <section ref={sectionRef} className='car flex flex-col md:flex-row'>
-        <div className="sm:hidden flex flex-col">
-          {mobileLines.map(renderLine)}
-        </div>
-        <div className="hidden sm:flex flex-col">
-          {smLines.map(renderLine)}
-        </div>
-      </section>
+        <section className='car-intro'>
+            <div className='car-text'
+                ref={sectionRef}
+            >
+                <div className="sm:hidden flex flex-col">
+                    {mobileLines.map(renderLine)}
+                </div>
+                <div className="hidden sm:flex flex-col">
+                    {smLines.map(renderLine)}
+                </div>
+            </div>
+
+            <div className='car-imgs relative w-full overflow-hidden'>
+
+            </div>
+        </section>
+      
     </div>
   );
 }

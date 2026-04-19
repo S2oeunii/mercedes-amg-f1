@@ -21,7 +21,7 @@ const Header = () => {
         </a>
 
         {/* 데스크탑 nav */}
-        <ul className="hidden lg:flex gap-[2.6vw] font-archivo font-semibold text-[24px] leading-none tracking-[-0.01em]">
+        <ul className="hidden sm:flex gap-[2.6vw] font-archivo font-semibold text-[24px] leading-none tracking-[-0.01em]">
           {navItems.map(({ label, to }) => (
             <li
               key={label}
@@ -39,7 +39,7 @@ const Header = () => {
 
         {/* 모바일 햄버거 버튼 */}
         <button
-          className="lg:hidden cursor-pointer"
+          className="sm:hidden cursor-pointer"
           onClick={() => setIsOpen(true)}
           aria-label="메뉴 열기"
         >
