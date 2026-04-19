@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import w17 from '../../../assets/img/car/W17.png';
+import hybridEra from '../../../assets/img/car/HybridEra.png';
 
 const Car = () => {
   const sectionRef = useRef(null);
@@ -50,19 +51,17 @@ const Car = () => {
     transform: revealed ? 'translateX(101%)' : 'translateX(0%)',
   });
 
-  const textCls = 'font-archivo font-bold text-white text-[clamp(35px,_4.17vw,_80px)] leading-none tracking-none';
-  const mint = 'text-[#00F4D0] font-eb-garamond font-semibold italic';
+  const textCls = 'font-archivo font-bold text-white text-[clamp(35px,_4.17vw,_80px)] text-center leading-none tracking-none';
+  const mint = 'text-[#00F4D0] text-center font-eb-garamond font-semibold italic';
 
   const mobileLines = [
     <>A New Era of</>,
-    <span className={mint}>Performance</span>,
-    <>Driven</>,
+    <><span className={mint}>Performance</span> Driven</>,
     <>by <span className={mint}>Innovation</span> and</>,
     <>Precision</>,
     <>Engineering,</>,
     <>Pushing the Limits</>,
-    <>of <span className={mint}>Speed</span></>,
-    <>and Control,</>,
+    <>of <span className={mint}>Speed</span> and Control,</>,
     <>Built for Formula 1</>,
   ];
 
@@ -86,7 +85,7 @@ const Car = () => {
 
   return (
     <div className='bg-black py-25 lg:pt-45 lg:pb-50 w-full flex flex-col items-center lg:gap-[15.63vw] overflow-hidden'>
-      <section className='car-intro flex flex-col gap-[4.48vw] lg:gap-[9.11vw]'>
+      <section className='car-intro flex flex-col gap-[86px] lg:gap-[175px] items-center'>
         <div className='car-text' ref={sectionRef}>
           <div className="sm:hidden flex flex-col">
             {mobileLines.map(renderLine)}
@@ -98,12 +97,17 @@ const Car = () => {
 
         <ul
           ref={carImgsRef}
-          className='car-imgs relative flex flex-col sm:flex-row sm:overflow-x-auto scrollbar-hide'
+          className='car-imgs flex flex-col sm:flex-row sm:overflow-x-auto scrollbar-hide'
         >
-          <li className='top-0 flex flex-col sm:gap-[0.73vw]'>
+          <li className='sm:mt-[14.74vw] flex flex-col sm:gap-[0.73vw]'>
             <p className='font-archivo font-bold italic
               text-[#00F4D0] text-[clamp(14px,_1.04vw,_20px)] leading-[1.5] sm:leading-[2]'>F1 W17</p>
-            <img src={w17} alt="W17" className='w-[16.15vw] sm:w-[46.84vw] h-auto' />
+            <img src={w17} alt="W17" className='w-77.5 sm:w-[46.84vw] h-auto' />
+          </li>
+          <li className='mt-[47px] sm:mt-0 ml-[224px] sm:ml-[7.03vw] flex flex-col sm:gap-[0.73vw]'>
+            <p className='font-archivo font-bold italic
+              text-white text-[clamp(14px,_1.04vw,_20px)] leading-[1.5] sm:leading-[2]'>Hybrid Era 2026</p>
+            <img src={hybridEra} alt="Hybrid Era" className='w-28 sm:w-[10.68vw] h-auto' />
           </li>
         </ul>
       </section>
