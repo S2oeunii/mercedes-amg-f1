@@ -1,13 +1,13 @@
 import { forwardRef, useEffect, useRef } from 'react';
-import precision from '../../../../assets/img/team/precision.png';
-import performance from '../../../../assets/img/team/performance.png';
-import legacy from '../../../../assets/img/team/legacy.png';
-import arrow from '../../../../assets/img/team/arrow.svg';
-import driver1 from '../../../../assets/img/team/driver1.png';
-import driverHover1 from '../../../../assets/img/team/driverHover-1.png';
-import driver2 from '../../../../assets/img/team/driver2.png';
-import driverHover2 from '../../../../assets/img/team/driverHover-2.png';
-import MoreView from '../../../../components/buttons/MoreView';
+import precision from '../../../assets/img/team/precision.png';
+import performance from '../../../assets/img/team/performance.png';
+import legacy from '../../../assets/img/team/legacy.png';
+import arrow from '../../../assets/img/team/arrow.svg';
+import driver1 from '../../../assets/img/team/driver1.png';
+import driverHover1 from '../../../assets/img/team/driverHover-1.png';
+import driver2 from '../../../assets/img/team/driver2.png';
+import driverHover2 from '../../../assets/img/team/driverHover-2.png';
+import MoreView from '../../../components/buttons/MoreView';
 
 const START_OFFSETS = [1.0, 1.15, 1.30];
 

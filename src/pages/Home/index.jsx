@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
-import Hero from './sections/Hero/Hero';
-import TeamOverview from './sections/TeamOverview/TeamOverview';
+import Hero from './sections/Hero';
+import TeamOverview from './sections/TeamOverview';
+import Car from './sections/Car';
 
 function Home() {
   const teamRef = useRef(null);
@@ -34,6 +35,7 @@ function Home() {
         isActive={activeSection === 'hero'}
       />
       <TeamOverview ref={teamRef} />
+      <Car />
     </>
   );
 }
