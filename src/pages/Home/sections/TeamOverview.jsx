@@ -90,7 +90,7 @@ const TeamOverview = forwardRef((_, ref) => {
   }, []);
 
   return (
-    <div className="bg-[#000] pt-45 pb-50 w-full flex flex-col items-center gap-25 lg:gap-[15.63vw]"
+    <div className="bg-[#000] py-25 lg:pt-45 lg:pb-50 w-full flex flex-col items-center gap-25 lg:gap-[15.63vw]"
       ref={ref}
     >
       <section className='overview w-full lg:w-[70.83vw] px-6 sm:px-[14.58vw] lg:px-0'>
@@ -109,7 +109,7 @@ const TeamOverview = forwardRef((_, ref) => {
 
               <p className='text-[#C0C7CE] font-pretendard font-light text-[clamp(14px,_1.04vw,_20px)] leading-normal tracking-tight'>
                 독일을 대표하는 메르세데스-AMG 페트로나스 포뮬러 원 팀은<br />
-                수십 년의 레이싱 헤리티지를 바탕으로 최첨단 기술력과<br className="lg:hidden" />정밀한 엔지니어링을 결합해,<br />
+                수십 년의 레이싱 헤리티지를 바탕으로 최첨단 기술력과<br className="lg:hidden" /> 정밀한 엔지니어링을 결합해,<br />
                 퍼포먼스의 한계를 끊임없이 확장해 나갑니다.
               </p>
             </div>
