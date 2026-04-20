@@ -133,15 +133,15 @@ const Car = () => {
                 <p className={liTitle}>Hybrid Era 2026</p>
                 <img src={hybridEra} alt="Hybrid Era" className='w-28 sm:w-[10.68vw] h-auto' />
               </li>
-              <li className='relative max-sm:top-[121px] max-sm:left-[159px] sm:absolute sm:left-[76.82vw] sm:top-[22.97vw] flex flex-col sm:gap-[0.73vw]'>
+              <li className='absolute max-sm:top-[520px] max-sm:left-[183px] sm:left-[76.82vw] sm:top-[22.97vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitle}>2026 Season Launch</p>
                 <img src={launch26} alt="2026 Season Launch" className='w-36.5 sm:w-[16.04vw] h-auto' />
               </li>
-              <li className='relative max-sm:-top-[246px] max-sm:left-[18px] sm:absolute sm:left-[97.76vw] sm:top-[6.88vw] flex flex-col sm:gap-[0.73vw]'>
+              <li className='absolute max-sm:top-[377px] max-sm:left-[42px] sm:left-[97.76vw] sm:top-[6.88vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitle}>Power Unit</p>
                 <img src={powerUnit} alt="Power Unit" className='w-25 sm:w-[9.95vw] h-auto' />
               </li>
-              <li className='relative max-sm:top-[221px] max-sm:left-[35px] sm:absolute sm:left-[120.21vw] sm:top-[2.08vw] flex flex-col sm:gap-[0.73vw]'>
+              <li className='absolute max-sm:top-[719px] max-sm:left-[59px] sm:left-[120.21vw] sm:top-[2.08vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitleMint}>F1 W16</p>
                 <img src={w16} alt="W16" className='w-77.5 sm:w-[46.88vw] h-auto' />
               </li>
