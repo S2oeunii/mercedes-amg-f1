@@ -126,7 +126,7 @@ const Car = () => {
           <div className='sm:sticky sm:top-0 sm:h-screen sm:overflow-hidden sm:flex sm:items-center'>
             <ul
               ref={carImgsRef}
-              className='car-imgs bg-black flex flex-col max-sm:items-center relative sm:min-w-[167.06vw] sm:h-[45vw]'
+              className='car-imgs bg-black flex flex-col max-sm:items-center relative max-sm:h-[1400px] sm:min-w-[167.06vw] sm:h-[45vw]'
             >
               <li className='absolute max-sm:top-0 max-sm:left-[24px] sm:left-[14.64vw] sm:top-[14.74vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitleMint}>F1 W17</p>
