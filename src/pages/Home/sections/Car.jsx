@@ -120,7 +120,7 @@ const Car = () => {
       relative py-25 lg:pt-[9.38vw] lg:pb-[10.42vw] w-full flex flex-col lg:gap-[15.63vw]'
     >
       <img src={bgPattern} className="absolute left-0 bottom-0 w-full h-auto" />
-      
+
       <section className='car-intro w-full flex flex-col gap-[86px] lg:gap-[175px] max-sm:items-center'>
 
         {/* 텍스트 */}
@@ -139,7 +139,7 @@ const Car = () => {
           <div className='sm:sticky sm:top-0 sm:h-screen sm:overflow-hidden sm:flex sm:items-center'>
             <ul
               ref={carImgsRef}
-              className='car-imgs flex flex-col max-sm:items-center relative max-sm:h-[1400px] sm:min-w-[211.93vw] sm:h-[45vw]'
+              className='car-imgs flex flex-col max-sm:items-center relative max-sm:h-[1400px] sm:min-w-[227.55vw] sm:h-[45vw]'
             >
               <li className='absolute max-sm:top-0 max-sm:left-[24px] sm:left-[14.64vw] sm:top-[14.74vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitleMint}>F1 W17</p>
