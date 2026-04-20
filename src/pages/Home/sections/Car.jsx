@@ -10,6 +10,10 @@ import italianGP from '../../../assets/img/car/ItalianGP_2025.png';
 import exploreW17 from '../../../assets/icons/exploreW17.svg';
 import w17_2 from '../../../assets/img/car/W17-2.png';
 import Plus from '../../../components/buttons/Plus';
+import line1 from '../../../assets/icons/line1.svg';
+import line2 from '../../../assets/icons/line2.svg';
+import line3 from '../../../assets/icons/line3.svg';
+import line4 from '../../../assets/icons/line4.svg';
 
 const Car = () => {
   const sectionRef   = useRef(null);
@@ -184,30 +188,42 @@ const Car = () => {
           <img src={w17_2} alt="F1 W17" className='w-[70.89vw] h-auto block' />
 
           <div className='descContainer absolute top-0 left-0'>
-            <div>
-              <Plus />
-              <p className='text-left text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'>
+            <div className='desc1 w-[28.65vw] h-[19.90vw] absolute top-[6.88vw] left-[1.88vw]'>
+              <p className=' absolute top-0 right-0
+                text-left text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+              >
                 <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Smaller & Lighter</span><br />
                 최적화된 설계로 민첩성과 효율 향상
               </p>
+              <img src={line1} alt="line" className='w-[10.03vw] h-auto absolute top-[1.51vw] left-[1.30vw]' />
+              <Plus className='absolute left-0 bottom-0' />
             </div>
-            <div>
-              <Plus />
-              <p className='text-center text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'>
+            <div className='desc2 w-[19.79vw] h-[14.27vw] absolute top-0 left-[44.06vw]'>
+              <p className=' absolute top-0 left-0
+                text-center text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+              >
                 <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Hybrid Power Unit</span><br />
                 전기 에너지 비중을 높인 차세대 동력 시스템
               </p>
+              <img src={line2} alt="line" className='w-[3.80vw] h-auto absolute top-[3.85vw] left-[2.60vw]' />
+              <Plus className='absolute left-0 bottom-0' />
             </div>
-            <div>
-              <Plus />
-              <p className='text-center text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'>
+            <div className='desc3 w-[18.23vw] h-[23.18vw] absolute top-[23.59vw] left-[28.44vw]'>
+              <Plus className='absolute top-0 right-0' />
+              <img src={line3} alt="line" className='w-[7.37vw] h-auto absolute top-[2.60vw] right-[3.02vw]' />
+              <p className=' absolute left-0 bottom-0
+                text-center text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+              >
                 <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Active Aerodynamics</span><br />
                 주행 상황에 맞춰 공기 흐름을 최적화
               </p>
             </div>
-            <div>
-              <Plus />
-              <p className='text-right text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'>
+            <div className='desc4 w-[18.80vw] h-[24.53vw] absolute top-[18.54vw] left-[50.47vw]'>
+              <Plus className='absolute top-0 right-0' />
+              <img src={line4} alt="line" className='w-[3.39vw] h-auto absolute top-[3.65vw] right-[1.30vw]' />
+              <p className=' absolute right-0 bottom-0
+                text-right text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+              >
                 <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Sustainable Innovation</span><br />
                 친환경 연료와 기술 기반의 미래 설계
               </p>
