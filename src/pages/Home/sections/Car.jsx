@@ -7,6 +7,7 @@ import w16 from '../../../assets/img/car/W16.png';
 import onTrack from '../../../assets/img/car/W16_OnTrack.png';
 import steeringWheel from '../../../assets/img/car/steeringWheel.png';
 import italianGP from '../../../assets/img/car/ItalianGP_2025.png';
+import exploreW17 from '../../../assets/icons/exploreW17.svg';
 
 const Car = () => {
   const sectionRef   = useRef(null);
@@ -107,7 +108,7 @@ const Car = () => {
   );
 
   return (
-    <div className='bg-black py-25 lg:pt-[9.38vw] lg:pb-[10.42vw] w-full flex flex-col lg:gap-[15.63vw]'>
+    <div className='bg-[linear-gradient(to_bottom,#000_80%,#000000db_100%)] sm:bg-[linear-gradient(to_bottom,#000_80%,#000000db_88%,#000000c7_100%)] py-25 lg:pt-[9.38vw] lg:pb-[10.42vw] w-full flex flex-col lg:gap-[15.63vw]'>
       <section className='car-intro w-full flex flex-col gap-[86px] lg:gap-[175px] max-sm:items-center'>
 
         {/* 텍스트 */}
@@ -126,7 +127,7 @@ const Car = () => {
           <div className='sm:sticky sm:top-0 sm:h-screen sm:overflow-hidden sm:flex sm:items-center'>
             <ul
               ref={carImgsRef}
-              className='car-imgs bg-black flex flex-col max-sm:items-center relative max-sm:h-[1400px] sm:min-w-[203vw] sm:h-[45vw]'
+              className='car-imgs flex flex-col max-sm:items-center relative max-sm:h-[1400px] sm:min-w-[203vw] sm:h-[45vw]'
             >
               <li className='absolute max-sm:top-0 max-sm:left-[24px] sm:left-[14.64vw] sm:top-[14.74vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitleMint}>F1 W17</p>
@@ -162,6 +163,9 @@ const Car = () => {
               </li>
             </ul>
           </div>
+          <button className='sm:hidden w-full flex items-center justify-center cursor-pointer'>
+            <img src={exploreW17} alt='Explore W17' className='w-[210px] h-auto' />
+          </button>
         </div>
       </section>
 
