@@ -123,17 +123,17 @@ const Car = () => {
           <div className='sm:sticky sm:top-0 sm:h-screen sm:overflow-hidden sm:flex sm:items-center'>
             <ul
               ref={carImgsRef}
-              className='car-imgs flex flex-col max-sm:items-center relative sm:min-w-[167.06vw] sm:h-[45vw]'
+              className='car-imgs bg-black flex flex-col max-sm:items-center relative sm:min-w-[167.06vw] sm:h-[45vw]'
             >
               <li className='absolute max-sm:top-0 max-sm:left-[24px] sm:left-[14.64vw] sm:top-[14.74vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitleMint}>F1 W17</p>
                 <img src={w17} alt="W17" className='w-77.5 sm:w-[46.84vw] h-auto' />
               </li>
-              <li className='absolute max-sm:top-[246px] max-sm:left-[248px] sm:left-[68.49vw] sm:top-0 flex flex-col sm:gap-[0.73vw]'>
+              <li className='absolute max-sm:top-[246px] max-sm:right-[33px] sm:left-[68.49vw] sm:top-0 flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitle}>Hybrid Era 2026</p>
                 <img src={hybridEra} alt="Hybrid Era" className='w-28 sm:w-[10.68vw] h-auto' />
               </li>
-              <li className='absolute max-sm:top-[520px] max-sm:left-[183px] sm:left-[76.82vw] sm:top-[22.97vw] flex flex-col sm:gap-[0.73vw]'>
+              <li className='absolute max-sm:top-[520px] max-sm:right-[64px] sm:left-[76.82vw] sm:top-[22.97vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitle}>2026 Season Launch</p>
                 <img src={launch26} alt="2026 Season Launch" className='w-36.5 sm:w-[16.04vw] h-auto' />
               </li>
@@ -141,7 +141,7 @@ const Car = () => {
                 <p className={liTitle}>Power Unit</p>
                 <img src={powerUnit} alt="Power Unit" className='w-25 sm:w-[9.95vw] h-auto' />
               </li>
-              <li className='absolute max-sm:top-[719px] max-sm:left-[59px] sm:left-[120.21vw] sm:top-[2.08vw] flex flex-col sm:gap-[0.73vw]'>
+              <li className='absolute max-sm:top-[719px] max-sm:right-6 sm:left-[120.21vw] sm:top-[2.08vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitleMint}>F1 W16</p>
                 <img src={w16} alt="W16" className='w-77.5 sm:w-[46.88vw] h-auto' />
               </li>
