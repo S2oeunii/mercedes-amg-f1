@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import bgPattern from '../../../assets/img/car/Bg.png';
 import w17 from '../../../assets/img/car/W17.png';
 import hybridEra from '../../../assets/img/car/HybridEra.png';
 import launch26 from '../../../assets/img/car/2026_Launch.png';
@@ -114,7 +115,12 @@ const Car = () => {
   );
 
   return (
-    <div className='bg-[linear-gradient(to_bottom,#000_80%,#000000db_100%)] sm:bg-[linear-gradient(to_bottom,#000_80%,#000000db_88%,#000000c7_100%)] py-25 lg:pt-[9.38vw] lg:pb-[10.42vw] w-full flex flex-col lg:gap-[15.63vw]'>
+    <div className='bg-[linear-gradient(to_bottom,#000_80%,#000000db_100%)]
+      sm:bg-[linear-gradient(to_bottom,#000_80%,#000000db_88%,#000000c7_100%)]
+      relative py-25 lg:pt-[9.38vw] lg:pb-[10.42vw] w-full flex flex-col lg:gap-[15.63vw]'
+    >
+      <img src={bgPattern} className="absolute left-0 bottom-0 w-full h-auto" />
+      
       <section className='car-intro w-full flex flex-col gap-[86px] lg:gap-[175px] max-sm:items-center'>
 
         {/* 텍스트 */}
@@ -218,7 +224,7 @@ const Car = () => {
                 주행 상황에 맞춰 공기 흐름을 최적화
               </p>
             </div>
-            <div className='desc4 w-[18.80vw] h-[24.53vw] absolute top-[18.54vw] left-[50.47vw]'>
+            <div className='desc4 w-[18.80vw] h-[24.53vw] absolute top-[18.54vw] left-[48.2vw]'>
               <Plus className='absolute top-0 right-0' />
               <img src={line4} alt="line" className='w-[3.39vw] h-auto absolute top-[3.65vw] right-[1.30vw]' />
               <p className=' absolute right-0 bottom-0
