@@ -138,12 +138,13 @@ const TeamOverview = forwardRef((_, ref) => {
 
               <ul className='imgContainer bottom-0 z-10 flex w-full gap-[clamp(10px,_1.04vw,_20px)]'>
                 {IMGS.map(({ src, alt }, i) => (
-                  <li key={alt} className='flex-1 min-w-0'>
+                  <li key={alt} className='flex-1 min-w-0 flex justify-center'>
                     <img
                       ref={(el) => { imgNodesRef.current[i] = el; }}
                       className='w-[clamp(108px,_10.94vw,_210px)] h-auto block'
                       src={src}
                       alt={alt}
+                      onLoad={recalcLines}
                     />
                   </li>
                 ))}
