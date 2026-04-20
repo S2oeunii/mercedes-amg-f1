@@ -3,8 +3,12 @@ import arrowDown from '../../../assets/icons/arrowDown.svg';
 import bg1 from '../../../assets/img/hero/Hero_KeyVisual-1.jpg';
 import bg2 from '../../../assets/img/hero/Hero_KeyVisual-2.jpg';
 import bg3 from '../../../assets/img/hero/Hero_KeyVisual-3.jpg';
+import mbg1 from '../../../assets/img/hero/Mobile_KeyVisual-1.png';
+import mbg2 from '../../../assets/img/hero/Mobile_KeyVisual-2.png';
+import mbg3 from '../../../assets/img/hero/Mobile_KeyVisual-3.png';
 
-const bgImages = [bg1, bg2, bg3];
+const bgImages   = [bg1, bg2, bg3];
+const mbgImages  = [mbg1, mbg2, mbg3];
 
 function Hero({ onScrollDown, step, setStep, isActive }) {
   const isScrolling = useRef(false);
@@ -42,11 +46,11 @@ function Hero({ onScrollDown, step, setStep, isActive }) {
   }, [isActive, onScrollDown, setStep]);
 
   return (
-    <section className="flex justify-between items-end pt-[25.5vw] px-[5.2vw] pb-[5.2vw] relative overflow-hidden">
+    <section className="flex justify-between max-sm:items-start sm:items-end max-sm:pt-[171px] sm:pt-[25.5vw] px-[5.2vw] pb-[5.2vw] min-h-screen relative overflow-hidden">
 
-      {/* 가로 슬라이드 배경 — 이미지 3장이 이어진 1열로 배치 */}
+      {/* 데스크탑 배경 */}
       <div
-        className="absolute inset-0 flex"
+        className="hidden sm:flex absolute inset-0"
         style={{
           width: `${bgImages.length * 100}vw`,
           transform: `translateX(-${step * 100}vw)`,
@@ -54,6 +58,24 @@ function Hero({ onScrollDown, step, setStep, isActive }) {
         }}
       >
         {bgImages.map((img, i) => (
+          <div
+            key={i}
+            className="h-full bg-cover bg-center flex-shrink-0"
+            style={{ width: '100vw', backgroundImage: `url(${img})` }}
+          />
+        ))}
+      </div>
+
+      {/* 모바일 배경 */}
+      <div
+        className="sm:hidden absolute inset-0 flex"
+        style={{
+          width: `${mbgImages.length * 100}vw`,
+          transform: `translateX(-${step * 100}vw)`,
+          transition: 'transform 0.85s cubic-bezier(0.77, 0, 0.175, 1)',
+        }}
+      >
+        {mbgImages.map((img, i) => (
           <div
             key={i}
             className="h-full bg-cover bg-center flex-shrink-0"
@@ -77,9 +99,9 @@ function Hero({ onScrollDown, step, setStep, isActive }) {
         </span>
       </h1>
 
-      {/* 스크롤 다운 버튼 */}
+      {/* 스크롤 다운 버튼 — 모바일 숨김 */}
       <div
-        className="group flex flex-col items-center gap-[0.31vw] cursor-pointer relative z-[100]"
+        className="max-sm:hidden group flex flex-col items-center gap-[0.31vw] cursor-pointer relative z-[100]"
         onClick={onScrollDown}
       >
         <span className="font-pretendard font-medium text-[0.83vw] text-white leading-none tracking-[-0.01em] text-center transition-colors duration-300 group-hover:text-[#00F4D0]">
