@@ -4,6 +4,9 @@ import hybridEra from '../../../assets/img/car/HybridEra.png';
 import launch26 from '../../../assets/img/car/2026_Launch.png';
 import powerUnit from '../../../assets/img/car/PowerUnit_26.png';
 import w16 from '../../../assets/img/car/W16.png';
+import onTrack from '../../../assets/img/car/W16_OnTrack.png';
+import steeringWheel from '../../../assets/img/car/steeringWheel.png';
+import italianGP from '../../../assets/img/car/ItalianGP_2025.png';
 
 const Car = () => {
   const sectionRef   = useRef(null);
@@ -144,6 +147,18 @@ const Car = () => {
               <li className='absolute max-sm:top-[719px] max-sm:right-6 sm:left-[120.21vw] sm:top-[2.08vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitleMint}>F1 W16</p>
                 <img src={w16} alt="W16" className='w-77.5 sm:w-[46.88vw] h-auto' />
+              </li>
+              <li className='absolute max-sm:top-[1018px] max-sm:right-16 sm:left-[171.04vw] sm:top-[29.84vw] flex flex-col sm:gap-[0.73vw]'>
+                <p className={liTitle}>On Track with W16</p>
+                <img src={onTrack} alt="onTrack" className='w-[115px] sm:w-[8.39vw] h-auto' />
+              </li>
+              <li className='absolute max-sm:top-[938px] max-sm:left-[35px] sm:left-[183.02vw] sm:top-0 flex flex-col sm:gap-[0.73vw]'>
+                <p className={liTitle}>Steering Wheel</p>
+                <img src={steeringWheel} alt="Steering Wheel" className='w-[97px] sm:w-[10.26vw] h-auto' />
+              </li>
+              <li className='absolute max-sm:top-[1243px] max-sm:left-[72px] sm:left-[193.96vw] sm:top-[21.46vw] flex flex-col sm:gap-[0.73vw]'>
+                <p className={liTitle}>Italian GP 2025</p>
+                <img src={italianGP} alt="ItalianGP 25" className='w-30 sm:w-[8.39vw] h-auto' />
               </li>
             </ul>
           </div>
