@@ -8,6 +8,8 @@ import onTrack from '../../../assets/img/car/W16_OnTrack.png';
 import steeringWheel from '../../../assets/img/car/steeringWheel.png';
 import italianGP from '../../../assets/img/car/ItalianGP_2025.png';
 import exploreW17 from '../../../assets/icons/exploreW17.svg';
+import w17_2 from '../../../assets/img/car/W17-2.png';
+import Plus from '../../../components/buttons/Plus';
 
 const Car = () => {
   const sectionRef   = useRef(null);
@@ -127,7 +129,7 @@ const Car = () => {
           <div className='sm:sticky sm:top-0 sm:h-screen sm:overflow-hidden sm:flex sm:items-center'>
             <ul
               ref={carImgsRef}
-              className='car-imgs flex flex-col max-sm:items-center relative max-sm:h-[1400px] sm:min-w-[203vw] sm:h-[45vw]'
+              className='car-imgs flex flex-col max-sm:items-center relative max-sm:h-[1400px] sm:min-w-[211.93vw] sm:h-[45vw]'
             >
               <li className='absolute max-sm:top-0 max-sm:left-[24px] sm:left-[14.64vw] sm:top-[14.74vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitleMint}>F1 W17</p>
@@ -159,7 +161,7 @@ const Car = () => {
               </li>
               <li className='absolute max-sm:top-[1243px] max-sm:left-[72px] sm:left-[193.96vw] sm:top-[21.46vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitle}>Italian GP 2025</p>
-                <img src={italianGP} alt="ItalianGP 25" className='w-30 sm:w-[8.39vw] h-auto' />
+                <img src={italianGP} alt="ItalianGP 25" className='w-30 sm:w-[17.97vw] h-auto' />
               </li>
             </ul>
           </div>
@@ -169,13 +171,48 @@ const Car = () => {
         </div>
       </section>
 
-      <section className='f1-w17 hidden sm:flex flex-col w-full px-[14.58vw]'>
+      <section className='f1-w17 hidden sm:flex flex-col w-full px-[14.58vw] gap-[7.81vw]'>
         <div className='flex flex-col gap-[5.21vw]'>
           <span className="text-[#00F4D0]/70 font-pretendard font-semibold text-[clamp(14px,_1.35vw,_26px)] leading-none tracking-none">2026 New F1 W17</span>
-          <p className='text-[#C0C7CE] font-pretendard font-light text-[1.35vw] leading-normal tracking-tight'>
+          <p className='text-[#C0C7CE] font-pretendard font-light text-[1.35vw] leading-normal tracking-[-0.025em]'>
             메르세데스-AMG F1 W17은 새로운 규정에 맞춰 설계된 차세대 머신으로,<br />
             공기역학과 하이브리드 기술을 통해 퍼포먼스와 효율을 극대화합니다.
           </p>
+        </div>
+        
+        <div className='carContainer relative flex items-center justify-center w-full h-[46.77vw]'>
+          <img src={w17_2} alt="F1 W17" className='w-[70.89vw] h-auto block' />
+
+          <div className='descContainer absolute top-0 left-0'>
+            <div>
+              <Plus />
+              <p className='text-left text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'>
+                <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Smaller & Lighter</span><br />
+                최적화된 설계로 민첩성과 효율 향상
+              </p>
+            </div>
+            <div>
+              <Plus />
+              <p className='text-center text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'>
+                <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Hybrid Power Unit</span><br />
+                전기 에너지 비중을 높인 차세대 동력 시스템
+              </p>
+            </div>
+            <div>
+              <Plus />
+              <p className='text-center text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'>
+                <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Active Aerodynamics</span><br />
+                주행 상황에 맞춰 공기 흐름을 최적화
+              </p>
+            </div>
+            <div>
+              <Plus />
+              <p className='text-right text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'>
+                <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Sustainable Innovation</span><br />
+                친환경 연료와 기술 기반의 미래 설계
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </div>
