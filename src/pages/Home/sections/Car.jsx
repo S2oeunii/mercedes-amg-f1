@@ -107,7 +107,7 @@ const Car = () => {
   );
 
   return (
-    <div className='bg-black py-25 lg:pt-45 lg:pb-50 w-full flex flex-col lg:gap-[15.63vw]'>
+    <div className='bg-black py-25 lg:pt-[9.38vw] lg:pb-[10.42vw] w-full flex flex-col lg:gap-[15.63vw]'>
       <section className='car-intro w-full flex flex-col gap-[86px] lg:gap-[175px] max-sm:items-center'>
 
         {/* 텍스트 */}
@@ -126,7 +126,7 @@ const Car = () => {
           <div className='sm:sticky sm:top-0 sm:h-screen sm:overflow-hidden sm:flex sm:items-center'>
             <ul
               ref={carImgsRef}
-              className='car-imgs bg-black flex flex-col max-sm:items-center relative max-sm:h-[1400px] sm:min-w-[167.06vw] sm:h-[45vw]'
+              className='car-imgs bg-black flex flex-col max-sm:items-center relative max-sm:h-[1400px] sm:min-w-[203vw] sm:h-[45vw]'
             >
               <li className='absolute max-sm:top-0 max-sm:left-[24px] sm:left-[14.64vw] sm:top-[14.74vw] flex flex-col sm:gap-[0.73vw]'>
                 <p className={liTitleMint}>F1 W17</p>
@@ -163,10 +163,17 @@ const Car = () => {
             </ul>
           </div>
         </div>
-
       </section>
 
-      <section className='f1-w17 w-full'></section>
+      <section className='f1-w17 hidden sm:flex flex-col w-full px-[14.58vw]'>
+        <div className='flex flex-col gap-[5.21vw]'>
+          <span className="text-[#00F4D0]/70 font-pretendard font-semibold text-[clamp(14px,_1.35vw,_26px)] leading-none tracking-none">2026 New F1 W17</span>
+          <p className='text-[#C0C7CE] font-pretendard font-light text-[1.35vw] leading-normal tracking-tight'>
+            메르세데스-AMG F1 W17은 새로운 규정에 맞춰 설계된 차세대 머신으로,<br />
+            공기역학과 하이브리드 기술을 통해 퍼포먼스와 효율을 극대화합니다.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }
