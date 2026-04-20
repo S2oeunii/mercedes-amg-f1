@@ -66,20 +66,20 @@ function Hero({ onScrollDown, step, setStep, isActive }) {
         ))}
       </div>
 
-      {/* 모바일 배경 */}
+      {/* 모바일 배경 — 세로 슬라이드 */}
       <div
-        className="sm:hidden absolute inset-0 flex"
+        className="sm:hidden absolute inset-0 flex flex-col"
         style={{
-          width: `${mbgImages.length * 100}vw`,
-          transform: `translateX(-${step * 100}vw)`,
+          height: `${mbgImages.length * 100}vh`,
+          transform: `translateY(-${step * 100}vh)`,
           transition: 'transform 0.85s cubic-bezier(0.77, 0, 0.175, 1)',
         }}
       >
         {mbgImages.map((img, i) => (
           <div
             key={i}
-            className="h-full bg-cover bg-center flex-shrink-0"
-            style={{ width: '100vw', backgroundImage: `url(${img})` }}
+            className="w-full flex-shrink-0 bg-cover bg-center"
+            style={{ height: '100vh', backgroundImage: `url(${img})` }}
           />
         ))}
       </div>

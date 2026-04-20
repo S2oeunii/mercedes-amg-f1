@@ -15,7 +15,9 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-[999] px-[5.21vw] py-[1.04vw] flex justify-between items-center">
+      <header className="fixed top-0 left-0 w-full z-[999] flex flex-col">
+        <div className="sm:hidden h-[44px] w-full" />
+      <div className="px-[5.21vw] py-[1.04vw] flex justify-between items-center">
         <a href="/">
           <img className="w-[101px] lg:w-[160px] h-auto" src={Logo} alt="Mercedes-Benz Logo" />
         </a>
@@ -45,6 +47,7 @@ const Header = () => {
         >
           <img src={NavIcon} style={{ width: '24px', height: '15px' }} alt="nav" />
         </button>
+      </div>
       </header>
 
       {/* 풀스크린 팝업 */}
