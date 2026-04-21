@@ -13,7 +13,7 @@ const MoreView = () => {
             {/* sm(640px)~ : 텍스트 버튼 */}
             <button className='hidden sm:flex sm:w-[11.04vw] sm:h-[3.44vw] justify-center items-center cursor-pointer
                 relative overflow-hidden
-                border border-solid border-white rounded-[50px]
+                border-2 border-solid border-white rounded-[50px]
                 hover:border-transparent transition-colors duration-[300ms] ease-out
                 before:absolute before:inset-0
                 before:bg-gradient-to-r before:from-[#00F4D0] before:to-[#008E79]

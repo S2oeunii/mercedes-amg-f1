@@ -3,6 +3,7 @@ import Hero from './sections/Hero';
 import TeamOverview from './sections/TeamOverview';
 import Car from './sections/Car';
 import Race from './sections/Race';
+import Partners from './sections/Partners';
 
 function Home() {
   const teamRef = useRef(null);
@@ -38,6 +39,7 @@ function Home() {
       <TeamOverview ref={teamRef} />
       <Car />
       <Race />
+      <Partners />
     </>
   );
 }

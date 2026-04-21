@@ -109,7 +109,7 @@ function Hero({ onScrollDown, step, setStep, isActive }) {
         </span>
 
         <div className="w-[2.6vw] h-[6.51vw]
-          border border-white rounded-[2.6vw]
+          border-2 border-white rounded-[2.6vw]
           relative overflow-hidden
           transition-colors duration-[300ms] ease-out
           group-hover:border-transparent
