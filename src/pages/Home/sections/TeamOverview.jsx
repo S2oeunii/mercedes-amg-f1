@@ -175,7 +175,7 @@ const TeamOverview = forwardRef((_, ref) => {
                 alt="George Russell"
               />
               <img
-                className='absolute inset-0 w-full h-auto block opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+                className='absolute inset-0 w-full h-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:block'
                 src={driverHover1}
                 alt="George Russell Hover"
               />
@@ -190,7 +190,7 @@ const TeamOverview = forwardRef((_, ref) => {
                 alt="Kimi Antonelli"
               />
               <img
-                className='absolute inset-0 w-full h-auto block opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+                className='absolute inset-0 w-full h-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:block'
                 src={driverHover2}
                 alt="Kimi Antonelli Hover"
               />

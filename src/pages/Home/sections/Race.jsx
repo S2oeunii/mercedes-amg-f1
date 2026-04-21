@@ -117,7 +117,7 @@ const Race = () => {
         </span>
 
         {/* 카드 영역 + 모바일 화살표 오버레이 */}
-        <div className='relative w-full sm:h-[23.65vw] mt-15 mb-[45px] sm:mt-[6.41vw] sm:mb-[1.61vw] sm:-ml-[14.58vw] sm:w-screen'>
+        <div className='relative w-screen sm:h-[23.65vw] mt-15 mb-[45px] sm:mt-[6.41vw] sm:mb-[1.61vw] -ml-6 sm:-ml-[14.58vw]'>
 
           {/* 카드 트랙 */}
           <div
@@ -174,14 +174,14 @@ const Race = () => {
 
           {/* 모바일 화살표 버튼 — 카드 영역에 오버레이 */}
           <div
-            className='sm:hidden absolute left-0 top-1/2 -translate-y-1/2 z-10 transition-opacity'
+            className='sm:hidden absolute left-6 top-1/2 -translate-y-1/2 z-20 transition-opacity'
             style={{ opacity: activeIndex === 0 ? 0.4 : 1, pointerEvents: activeIndex === 0 ? 'none' : 'auto' }}
             onClick={() => setActiveIndex(i => Math.max(0, i - 1))}
           >
             <ArrowLeft />
           </div>
           <div
-            className='sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 transition-opacity'
+            className='sm:hidden absolute right-10 top-1/2 -translate-y-1/2 z-20 transition-opacity'
             style={{ opacity: activeIndex === CARDS.length - 1 ? 0.4 : 1, pointerEvents: activeIndex === CARDS.length - 1 ? 'none' : 'auto' }}
             onClick={() => setActiveIndex(i => Math.min(CARDS.length - 1, i + 1))}
           >
