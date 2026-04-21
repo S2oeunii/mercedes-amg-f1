@@ -118,8 +118,8 @@ const Car = () => {
       sm:bg-[linear-gradient(to_bottom,#000_80%,#000000db_88%,#000000c7_100%)]
       relative py-25 lg:pt-[9.38vw] lg:pb-[10.42vw] w-full flex flex-col lg:gap-[15.63vw]'
     >
-      <img src={bgPattern} className="absolute left-0 bottom-0 w-full h-auto hidden sm:block" />
-      <img src={mobileBg} className="absolute left-0 bottom-0 w-full h-auto sm:hidden" />
+      <img src={bgPattern} className="absolute left-0 bottom-0 w-full h-auto hidden sm:block pointer-events-none" />
+      <img src={mobileBg} className="absolute left-0 bottom-0 w-full h-auto sm:hidden pointer-events-none" />
 
       <section className='car-intro w-full flex flex-col gap-[86px] lg:gap-[175px] max-sm:items-center'>
 
