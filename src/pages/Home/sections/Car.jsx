@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import bgPattern from '../../../assets/img/car/Bg.png';
+import mobileBg from '../../../assets/img/car/Bg_Mobile.png';
 import w17 from '../../../assets/img/car/W17.png';
 import hybridEra from '../../../assets/img/car/HybridEra.png';
 import launch26 from '../../../assets/img/car/2026_Launch.png';
@@ -117,7 +118,8 @@ const Car = () => {
       sm:bg-[linear-gradient(to_bottom,#000_80%,#000000db_88%,#000000c7_100%)]
       relative py-25 lg:pt-[9.38vw] lg:pb-[10.42vw] w-full flex flex-col lg:gap-[15.63vw]'
     >
-      <img src={bgPattern} className="absolute left-0 bottom-0 w-full h-auto" />
+      <img src={bgPattern} className="absolute left-0 bottom-0 w-full h-auto hidden sm:block" />
+      <img src={mobileBg} className="absolute left-0 bottom-0 w-full h-auto sm:hidden" />
 
       <section className='car-intro w-full flex flex-col gap-[86px] lg:gap-[175px] max-sm:items-center'>
 

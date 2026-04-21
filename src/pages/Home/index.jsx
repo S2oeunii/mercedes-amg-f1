@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import Hero from './sections/Hero';
 import TeamOverview from './sections/TeamOverview';
 import Car from './sections/Car';
+import Race from './sections/Race';
 
 function Home() {
   const teamRef = useRef(null);
@@ -36,6 +37,7 @@ function Home() {
       />
       <TeamOverview ref={teamRef} />
       <Car />
+      <Race />
     </>
   );
 }
