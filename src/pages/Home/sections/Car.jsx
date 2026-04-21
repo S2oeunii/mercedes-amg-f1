@@ -11,16 +11,14 @@ import italianGP from '../../../assets/img/car/ItalianGP_2025.png';
 import exploreW17 from '../../../assets/icons/exploreW17.svg';
 import w17_2 from '../../../assets/img/car/W17-2.png';
 import Plus from '../../../components/buttons/Plus';
-import line1 from '../../../assets/icons/line1.svg';
-import line2 from '../../../assets/icons/line2.svg';
-import line3 from '../../../assets/icons/line3.svg';
-import line4 from '../../../assets/icons/line4.svg';
 
 const Car = () => {
   const sectionRef   = useRef(null);
   const carWrapperRef = useRef(null);
   const carImgsRef   = useRef(null);
   const [revealed, setRevealed] = useState(false);
+  const [openItem, setOpenItem] = useState(null);
+  const toggle = (id) => setOpenItem(prev => prev === id ? null : id);
 
   // 텍스트 커버 reveal
   useEffect(() => {
@@ -194,41 +192,89 @@ const Car = () => {
           <img src={w17_2} alt="F1 W17" className='w-[70.89vw] h-auto block' />
 
           <div className='descContainer absolute top-0 left-0'>
+
+            {/* desc1 — Plus: bottom-left, line: top-[1.51vw] left-[1.30vw], text: top-right */}
             <div className='desc1 w-[28.65vw] h-[19.90vw] absolute top-[6.88vw] left-[1.88vw]'>
-              <p className=' absolute top-0 right-0
-                text-left text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+              <p
+                className='absolute top-0 right-0 text-left text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+                style={{ opacity: openItem === 0 ? 1 : 0, transition: `opacity 0.3s ease ${openItem === 0 ? '0.65s' : '0s'}` }}
               >
                 <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Smaller & Lighter</span><br />
                 최적화된 설계로 민첩성과 효율 향상
               </p>
-              <img src={line1} alt="line" className='w-[10.03vw] h-auto absolute top-[1.51vw] left-[1.30vw]' />
-              <Plus className='absolute left-0 bottom-0' />
+              <svg viewBox="0 0 195 287" fill="none" className='absolute top-[1.51vw] left-[1.30vw]' style={{ width: '10.03vw', height: 'auto' }}>
+                <defs>
+                  <linearGradient id="lg1" x1="61.5" y1="-69.6504" x2="61.5" y2="286.35" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#00F4D0" /><stop offset="0.495192" stopColor="white" /><stop offset="1" stopColor="#00F4D0" />
+                  </linearGradient>
+                </defs>
+                <path d="M1 286.35V120.35L193.5 0.849609" stroke="url(#lg1)" strokeWidth="2" pathLength="1"
+                  style={{ strokeDasharray: 1, strokeDashoffset: openItem === 0 ? 0 : 1, transition: `stroke-dashoffset 0.65s cubic-bezier(0.77,0,0.175,1)` }}
+                />
+              </svg>
+              <Plus className='absolute left-0 bottom-0' isOpen={openItem === 0} onClick={() => toggle(0)} />
             </div>
+
+            {/* desc2 — Plus: bottom-left, line: top-[3.85vw] left-[2.60vw], text: top-left */}
             <div className='desc2 w-[19.79vw] h-[14.27vw] absolute top-0 left-[44.06vw]'>
-              <p className=' absolute top-0 left-0
-                text-center text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+              <p
+                className='absolute top-0 left-0 text-center text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+                style={{ opacity: openItem === 1 ? 1 : 0, transition: `opacity 0.3s ease ${openItem === 1 ? '0.65s' : '0s'}` }}
               >
                 <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Hybrid Power Unit</span><br />
                 전기 에너지 비중을 높인 차세대 동력 시스템
               </p>
-              <img src={line2} alt="line" className='w-[3.80vw] h-auto absolute top-[3.85vw] left-[2.60vw]' />
-              <Plus className='absolute left-0 bottom-0' />
+              <svg viewBox="0 0 75 151" fill="none" className='absolute top-[3.85vw] left-[2.60vw]' style={{ width: '3.80vw', height: 'auto' }}>
+                <defs>
+                  <linearGradient id="lg2" x1="37.1377" y1="0" x2="37.1377" y2="150" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#00F4D0" /><stop offset="0.495192" stopColor="white" /><stop offset="1" stopColor="#00F4D0" />
+                  </linearGradient>
+                </defs>
+                <path d="M0.637695 150L73.6377 89.5V0" stroke="url(#lg2)" strokeWidth="2" pathLength="1"
+                  style={{ strokeDasharray: 1, strokeDashoffset: openItem === 1 ? 0 : 1, transition: `stroke-dashoffset 0.65s cubic-bezier(0.77,0,0.175,1)` }}
+                />
+              </svg>
+              <Plus className='absolute left-0 bottom-0' isOpen={openItem === 1} onClick={() => toggle(1)} />
             </div>
+
+            {/* desc3 — Plus: top-right, line: top-[2.60vw] right-[3.02vw], text: bottom-left */}
             <div className='desc3 w-[18.23vw] h-[23.18vw] absolute top-[23.59vw] left-[28.44vw]'>
-              <Plus className='absolute top-0 right-0' />
-              <img src={line3} alt="line" className='w-[7.37vw] h-auto absolute top-[2.60vw] right-[3.02vw]' />
-              <p className=' absolute left-0 bottom-0
-                text-center text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+              <Plus className='absolute top-0 right-0' isOpen={openItem === 2} onClick={() => toggle(2)} />
+              <svg viewBox="0 0 144 327" fill="none" className='absolute top-[2.60vw] right-[3.02vw]' style={{ width: '7.37vw', height: 'auto' }}>
+                <defs>
+                  <linearGradient id="lg3" x1="71.75" y1="0.711914" x2="71.75" y2="326.712" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#00F4D0" /><stop offset="0.495192" stopColor="white" /><stop offset="1" stopColor="#00F4D0" />
+                  </linearGradient>
+                </defs>
+                <path d="M142.5 0.711914L1 140.212V326.712" stroke="url(#lg3)" strokeWidth="2" pathLength="1"
+                  style={{ strokeDasharray: 1, strokeDashoffset: openItem === 2 ? 0 : 1, transition: `stroke-dashoffset 0.65s cubic-bezier(0.77,0,0.175,1)` }}
+                />
+              </svg>
+              <p
+                className='absolute left-0 bottom-0 text-center text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+                style={{ opacity: openItem === 2 ? 1 : 0, transition: `opacity 0.3s ease ${openItem === 2 ? '0.65s' : '0s'}` }}
               >
                 <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Active Aerodynamics</span><br />
                 주행 상황에 맞춰 공기 흐름을 최적화
               </p>
             </div>
+
+            {/* desc4 — Plus: top-right, line: top-[3.65vw] right-[1.30vw], text: bottom-right */}
             <div className='desc4 w-[18.80vw] h-[24.53vw] absolute top-[18.54vw] left-[48.2vw]'>
-              <Plus className='absolute top-0 right-0' />
-              <img src={line4} alt="line" className='w-[3.39vw] h-auto absolute top-[3.65vw] right-[1.30vw]' />
-              <p className=' absolute right-0 bottom-0
-                text-right text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+              <Plus className='absolute top-0 right-0' isOpen={openItem === 3} onClick={() => toggle(3)} />
+              <svg viewBox="0 0 67 333" fill="none" className='absolute top-[3.65vw] right-[1.30vw]' style={{ width: '3.39vw', height: 'auto' }}>
+                <defs>
+                  <linearGradient id="lg4" x1="33.3047" y1="0" x2="33.3047" y2="331.5" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#00F4D0" /><stop offset="0.495192" stopColor="white" /><stop offset="1" stopColor="#00F4D0" />
+                  </linearGradient>
+                </defs>
+                <path d="M65.8047 0V243.5L0.804688 331.5" stroke="url(#lg4)" strokeWidth="2" pathLength="1"
+                  style={{ strokeDasharray: 1, strokeDashoffset: openItem === 3 ? 0 : 1, transition: `stroke-dashoffset 0.65s cubic-bezier(0.77,0,0.175,1)` }}
+                />
+              </svg>
+              <p
+                className='absolute right-0 bottom-0 text-right text-[#00F4D0]/60 font-archivo font-regular text-[1.15vw] leading-tight tracking-[-0.025em]'
+                style={{ opacity: openItem === 3 ? 1 : 0, transition: `opacity 0.3s ease ${openItem === 3 ? '0.65s' : '0s'}` }}
               >
                 <span className='text-[#00F4D0] font-semibold text-[1.46vw]'>Sustainable Innovation</span><br />
                 친환경 연료와 기술 기반의 미래 설계
