@@ -159,7 +159,7 @@ const TeamOverview = forwardRef((_, ref) => {
       <section className='drivers w-full lg:w-[70.83vw] px-6 sm:px-[14.58vw] lg:px-0'>
         <span className="text-[#00F4D0]/70 font-pretendard font-semibold text-[clamp(14px,_1.35vw,_26px)] leading-none tracking-none">Team Drivers</span>
 
-        <div className='profiles w-full flex flex-col md:flex-row gap-15 md:gap-[5.21vw] mx-auto mt-25'>
+        <div className='profiles w-full flex flex-col md:flex-row gap-25 md:gap-[5.21vw] mx-auto mt-25'>
           <div className='driver1 flex flex-col justify-between gap-[5vw]'>
             <div className='flex flex-col gap-[0.57vw]'>
               <p className='text-white font-archivo font-bold text-[clamp(20px,_2.08vw,_40px)] leading-none tracking-none'>George Russell</p>
@@ -168,7 +168,7 @@ const TeamOverview = forwardRef((_, ref) => {
                 <img className='w-[clamp(97px,_8.23vw,_158px)] h-auto' src={arrow} alt="Arrow" />
               </a>
             </div>
-            <div className='relative w-full cursor-pointer group'>
+            <div className='relative w-full cursor-pointer group mt-[-50px] md:mt-0'>
               <img
                 className='w-full h-auto block'
                 src={driver1}
@@ -183,7 +183,7 @@ const TeamOverview = forwardRef((_, ref) => {
           </div>
 
           <div className='driver2 flex flex-col-reverse md:flex-col justify-between gap-[1.61vw]'>
-            <div className='relative w-full cursor-pointer group'>
+            <div className='relative w-full cursor-pointer group mt-[-25px] md:mt-0'>
               <img
                 className='w-full h-auto block'
                 src={driver2}

@@ -24,13 +24,15 @@ const CARDS = [
 ];
 
 const Race = () => {
-  const [activeIndex, setActiveIndex] = useState(2);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [offset, setOffset]           = useState(0);
-  const listRef      = useRef(null);
-  const startX       = useRef(0);
-  const isDragging   = useRef(false);
-  const dragDelta    = useRef(0);
-  const wheelBlock   = useRef(false);
+  const [dragOffset, setDragOffset]   = useState(0);
+  const [isGrabbing, setIsGrabbing]   = useState(false);
+  const listRef        = useRef(null);
+  const startX         = useRef(0);
+  const isDragging     = useRef(false);
+  const dragOffsetRef  = useRef(0);
+  const wheelBlock     = useRef(false);
 
   // 활성 카드를 컨테이너 중앙에 맞추는 오프셋 계산
   useLayoutEffect(() => {
@@ -65,23 +67,38 @@ const Race = () => {
     return () => el.removeEventListener('wheel', onWheel);
   }, []);
 
-  // 데스크탑: 드래그
+  // 데스크탑: 드래그 (연속 이동)
   const onMouseDown = (e) => {
     if (window.innerWidth < 640) return;
-    isDragging.current = true;
-    startX.current     = e.clientX;
-    dragDelta.current  = 0;
+    isDragging.current    = true;
+    startX.current        = e.clientX;
+    dragOffsetRef.current = 0;
+    setIsGrabbing(true);
   };
   const onMouseMove = (e) => {
     if (!isDragging.current) return;
-    dragDelta.current = e.clientX - startX.current;
+    const cardW = 15.63 * window.innerWidth / 100;
+    const gapW  = 1.04  * window.innerWidth / 100;
+    const step  = cardW + gapW;
+    const raw   = e.clientX - startX.current;
+    // 경계 클램프: 첫/마지막 카드 밖으로 드래그 방지
+    const maxRight =  activeIndex * step;
+    const maxLeft  = -(CARDS.length - 1 - activeIndex) * step;
+    const clamped  = Math.max(maxLeft, Math.min(maxRight, raw));
+    dragOffsetRef.current = clamped;
+    setDragOffset(clamped);
   };
   const onMouseUp = () => {
     if (!isDragging.current) return;
     isDragging.current = false;
-    if      (dragDelta.current >  60) setActiveIndex(i => Math.max(0, i - 1));
-    else if (dragDelta.current < -60) setActiveIndex(i => Math.min(CARDS.length - 1, i + 1));
-    dragDelta.current = 0;
+    const cardW = 15.63 * window.innerWidth / 100;
+    const gapW  = 1.04  * window.innerWidth / 100;
+    const shift = -dragOffsetRef.current / (cardW + gapW);
+    const next  = Math.max(0, Math.min(CARDS.length - 1, Math.round(activeIndex + shift)));
+    dragOffsetRef.current = 0;
+    setDragOffset(0);
+    setIsGrabbing(false);
+    setActiveIndex(next);
   };
 
   return (
@@ -100,12 +117,12 @@ const Race = () => {
         </span>
 
         {/* 카드 영역 + 모바일 화살표 오버레이 */}
-        <div className='relative w-full sm:h-[23.65vw] mt-15 mb-[45px] sm:mt-[6.41vw] sm:mb-[1.61vw]'>
+        <div className='relative w-full sm:h-[23.65vw] mt-15 mb-[45px] sm:mt-[6.41vw] sm:mb-[1.61vw] sm:-ml-[14.58vw] sm:w-screen'>
 
           {/* 카드 트랙 */}
           <div
             ref={listRef}
-            className='w-full overflow-hidden sm:cursor-grab sm:active:cursor-grabbing'
+            className='w-full overflow-hidden sm:overflow-visible sm:cursor-grab sm:active:cursor-grabbing'
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}
@@ -114,8 +131,8 @@ const Race = () => {
             <div
               className='flex items-center gap-4 sm:gap-[1.04vw]'
               style={{
-                transform:  `translateX(${offset}px)`,
-                transition: 'transform 0.5s cubic-bezier(0.77, 0, 0.175, 1)',
+                transform:  `translateX(${offset + dragOffset}px)`,
+                transition: isGrabbing ? 'none' : 'transform 0.5s cubic-bezier(0.77, 0, 0.175, 1)',
                 userSelect: 'none',
                 willChange: 'transform',
               }}
@@ -126,11 +143,12 @@ const Race = () => {
                 return (
                   <div
                     key={card.id}
-                    className='flex-shrink-0 relative overflow-hidden group select-none
-                      w-[197px] h-[219px] sm:w-[15.63vw] sm:h-auto'
+                    className={`flex-shrink-0 relative overflow-hidden group select-none
+                      w-[197px] h-[219px] sm:w-[15.63vw] sm:h-auto
+                      ${dist !== 0 ? 'opacity-40 sm:opacity-100' : ''}`}
                     style={{
                       transform:       `scale(${scale})`,
-                      transition:      'transform 0.5s cubic-bezier(0.77, 0, 0.175, 1)',
+                      transition:      'transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s',
                       transformOrigin: 'center center',
                     }}
                   >
