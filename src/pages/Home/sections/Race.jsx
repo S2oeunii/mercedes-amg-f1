@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react'
 import bgPattern from '../../../assets/img/race/Bg.png';
 import mobileBg from '../../../assets/img/race/Bg_Mobile.png';
 import MoreView from '../../../components/buttons/MoreView';
@@ -23,82 +23,191 @@ const CARDS = [
   { id: 4, image: austria, hoverImage: austriaHover },
 ];
 
+const TOTAL   = CARDS.length;
+const CARD_VW = 15.63;
+const GAP_VW  = 1.04;
+
+function lerp(keys, t) {
+  if (t <= keys[0][0]) return keys[0][1];
+  for (let i = 1; i < keys.length; i++) {
+    if (t <= keys[i][0]) {
+      const [t0, v0] = keys[i - 1];
+      const [t1, v1] = keys[i];
+      return v0 + ((v1 - v0) * (t - t0)) / (t1 - t0);
+    }
+  }
+  return keys[keys.length - 1][1];
+}
+
+const SCALE_KEYS   = [[0, 1.0], [1, 0.87], [2, 0.77]];
+const ROT_KEYS     = [[0, 0],   [1, 18],   [2, 32]];
+const OPACITY_KEYS = [[0, 1.0], [1, 0.7],  [2, 0.45]];
+
+// Lightweight spring: returns a cancel fn
+function springTo(posRef, target, onUpdate) {
+  let velocity = 0;
+  const stiffness = 300;
+  const damping   = 30;
+  let rafId;
+
+  const step = () => {
+    const dt    = 1 / 60;
+    const force = -stiffness * (posRef.current - target) + -damping * velocity;
+    velocity   += force * dt;
+    posRef.current += velocity * dt;
+
+    onUpdate(posRef.current);
+
+    if (Math.abs(posRef.current - target) > 0.0005 || Math.abs(velocity) > 0.0005) {
+      rafId = requestAnimationFrame(step);
+    } else {
+      posRef.current = target;
+      onUpdate(target);
+    }
+  };
+  rafId = requestAnimationFrame(step);
+  return () => cancelAnimationFrame(rafId);
+}
+
 const Race = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [offset, setOffset]           = useState(0);
-  const [dragOffset, setDragOffset]   = useState(0);
-  const [isGrabbing, setIsGrabbing]   = useState(false);
-  const listRef        = useRef(null);
-  const startX         = useRef(0);
-  const isDragging     = useRef(false);
-  const dragOffsetRef  = useRef(0);
-  const wheelBlock     = useRef(false);
+  // ── Desktop ──
+  const posRef       = useRef(0);        // raw position value
+  const cancelAnim   = useRef(null);
+  const itemRefs     = useRef([]);
+  const gapRef       = useRef(0);
+  const wheelBlock   = useRef(false);
+  const isDragging   = useRef(false);
+  const dragStartX   = useRef(0);
+  const dragStartPos = useRef(0);
+  const trackRef     = useRef(null);
 
-  // 활성 카드를 컨테이너 중앙에 맞추는 오프셋 계산
-  useLayoutEffect(() => {
-    const compute = () => {
-      if (!listRef.current) return;
-      const containerW = listRef.current.offsetWidth;
-      const isMobile   = window.innerWidth < 640;
-      const cardW = isMobile ? 197 : 15.63 * window.innerWidth / 100;
-      const gap   = isMobile ? 16  : 1.04  * window.innerWidth / 100;
-      setOffset(containerW / 2 - (activeIndex * (cardW + gap) + cardW / 2));
-    };
-    compute();
-    window.addEventListener('resize', compute);
-    return () => window.removeEventListener('resize', compute);
-  }, [activeIndex]);
+  // ── Mobile ──
+  const [mobileIndex,       setMobileIndex]       = useState(0);
+  const [mobileOffset,      setMobileOffset]       = useState(0);
+  const [mobileDragOffset,  setMobileDragOffset]   = useState(0);
+  const [isGrabbing,        setIsGrabbing]         = useState(false);
+  const mobileListRef       = useRef(null);
+  const mobileStartX        = useRef(0);
+  const isMobileDragging    = useRef(false);
+  const mobileDragOffsetRef = useRef(0);
 
-  // 데스크탑: cardList 위 휠 → 좌우 이동
+  // ── Desktop: apply transforms ──
+  const updateItems = useCallback((pos) => {
+    const gap = gapRef.current;
+    itemRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const offset    = i - pos;
+      const absOffset = Math.abs(offset);
+      const scale   = lerp(SCALE_KEYS, absOffset);
+      const rotY    = -Math.sign(offset) * lerp(ROT_KEYS, absOffset);
+      const opacity = lerp(OPACITY_KEYS, absOffset);
+      const x       = offset * gap;
+      el.style.transform = `translateX(calc(-50% + ${x}px)) translateY(-50%) rotateY(${rotY}deg) scale(${scale})`;
+      el.style.opacity   = String(opacity);
+      el.style.zIndex    = String(100 - Math.round(absOffset * 10));
+    });
+  }, []);
+
   useEffect(() => {
-    const el = listRef.current;
+    const calcGap = () => {
+      const vw = window.innerWidth;
+      return (vw * CARD_VW) / 100 + (vw * GAP_VW) / 100;
+    };
+    gapRef.current = calcGap();
+    updateItems(posRef.current);
+
+    const onResize = () => {
+      gapRef.current = calcGap();
+      updateItems(posRef.current);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [updateItems]);
+
+  const doSnap = useCallback((target) => {
+    const clamped = Math.max(0, Math.min(TOTAL - 1, target));
+    cancelAnim.current?.();
+    cancelAnim.current = springTo(posRef, clamped, updateItems);
+  }, [updateItems]);
+
+  // Desktop: wheel
+  useEffect(() => {
+    const el = trackRef.current;
     if (!el) return;
     const onWheel = (e) => {
       if (window.innerWidth < 640) return;
       e.preventDefault();
       if (wheelBlock.current) return;
-      setActiveIndex(i =>
-        e.deltaY > 0 ? Math.min(CARDS.length - 1, i + 1) : Math.max(0, i - 1)
-      );
+      doSnap(Math.round(posRef.current) + (e.deltaY > 0 ? 1 : -1));
       wheelBlock.current = true;
       setTimeout(() => { wheelBlock.current = false; }, 650);
     };
     el.addEventListener('wheel', onWheel, { passive: false });
     return () => el.removeEventListener('wheel', onWheel);
-  }, []);
+  }, [doSnap]);
 
-  // 데스크탑: 드래그 (연속 이동)
-  const onMouseDown = (e) => {
+  // Desktop: mouse drag
+  const onDesktopDown = (e) => {
     if (window.innerWidth < 640) return;
-    isDragging.current    = true;
-    startX.current        = e.clientX;
-    dragOffsetRef.current = 0;
-    setIsGrabbing(true);
+    cancelAnim.current?.();
+    isDragging.current   = true;
+    dragStartX.current   = e.clientX;
+    dragStartPos.current = posRef.current;
   };
-  const onMouseMove = (e) => {
+  const onDesktopMove = (e) => {
     if (!isDragging.current) return;
-    const cardW = 15.63 * window.innerWidth / 100;
-    const gapW  = 1.04  * window.innerWidth / 100;
-    const step  = cardW + gapW;
-    const raw   = e.clientX - startX.current;
-    // 경계 클램프: 첫/마지막 카드 밖으로 드래그 방지
-    const maxRight =  activeIndex * step;
-    const maxLeft  = -(CARDS.length - 1 - activeIndex) * step;
-    const clamped  = Math.max(maxLeft, Math.min(maxRight, raw));
-    dragOffsetRef.current = clamped;
-    setDragOffset(clamped);
+    const dx     = e.clientX - dragStartX.current;
+    const newPos = dragStartPos.current - dx / gapRef.current;
+    posRef.current = Math.max(0, Math.min(TOTAL - 1, newPos));
+    updateItems(posRef.current);
   };
-  const onMouseUp = () => {
+  const onDesktopUp = () => {
     if (!isDragging.current) return;
     isDragging.current = false;
-    const cardW = 15.63 * window.innerWidth / 100;
-    const gapW  = 1.04  * window.innerWidth / 100;
-    const shift = -dragOffsetRef.current / (cardW + gapW);
-    const next  = Math.max(0, Math.min(CARDS.length - 1, Math.round(activeIndex + shift)));
-    dragOffsetRef.current = 0;
-    setDragOffset(0);
+    doSnap(Math.round(posRef.current));
+  };
+
+  // Mobile: compute center offset
+  useLayoutEffect(() => {
+    const compute = () => {
+      if (!mobileListRef.current || window.innerWidth >= 640) return;
+      const containerW = mobileListRef.current.offsetWidth;
+      const cardW = 197, gap = 16;
+      setMobileOffset(containerW / 2 - (mobileIndex * (cardW + gap) + cardW / 2));
+    };
+    compute();
+    window.addEventListener('resize', compute);
+    return () => window.removeEventListener('resize', compute);
+  }, [mobileIndex]);
+
+  // Mobile: mouse drag
+  const onMobileDown = (e) => {
+    if (window.innerWidth >= 640) return;
+    isMobileDragging.current    = true;
+    mobileStartX.current        = e.clientX;
+    mobileDragOffsetRef.current = 0;
+    setIsGrabbing(true);
+  };
+  const onMobileMove = (e) => {
+    if (!isMobileDragging.current) return;
+    const cardW = 197, gap = 16, step = cardW + gap;
+    const raw      = e.clientX - mobileStartX.current;
+    const maxRight =  mobileIndex * step;
+    const maxLeft  = -(CARDS.length - 1 - mobileIndex) * step;
+    const clamped  = Math.max(maxLeft, Math.min(maxRight, raw));
+    mobileDragOffsetRef.current = clamped;
+    setMobileDragOffset(clamped);
+  };
+  const onMobileUp = () => {
+    if (!isMobileDragging.current) return;
+    isMobileDragging.current = false;
+    const cardW = 197, gap = 16;
+    const shift = -mobileDragOffsetRef.current / (cardW + gap);
+    const next  = Math.max(0, Math.min(CARDS.length - 1, Math.round(mobileIndex + shift)));
+    mobileDragOffsetRef.current = 0;
+    setMobileDragOffset(0);
     setIsGrabbing(false);
-    setActiveIndex(next);
+    setMobileIndex(next);
   };
 
   return (
@@ -116,54 +225,82 @@ const Race = () => {
           Upcoming Races
         </span>
 
-        {/* 카드 영역 + 모바일 화살표 오버레이 */}
+        {/* 카드 영역 */}
         <div className='relative w-screen sm:h-[23.65vw] mt-15 mb-[45px] sm:mt-[6.41vw] sm:mb-[1.61vw] -ml-6 sm:-ml-[14.58vw]'>
 
-          {/* 카드 트랙 */}
+          {/* ── Desktop 3D carousel ── */}
           <div
-            ref={listRef}
-            className='w-full overflow-hidden sm:overflow-visible sm:cursor-grab sm:active:cursor-grabbing'
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}
-            onMouseLeave={onMouseUp}
+            ref={trackRef}
+            className='hidden sm:block relative w-full h-full cursor-grab active:cursor-grabbing select-none'
+            style={{ perspective: '62.5vw' }}
+            onMouseDown={onDesktopDown}
+            onMouseMove={onDesktopMove}
+            onMouseUp={onDesktopUp}
+            onMouseLeave={onDesktopUp}
+          >
+            {CARDS.map((card, i) => (
+              <div
+                key={card.id}
+                ref={(el) => { itemRefs.current[i] = el; }}
+                className='absolute left-1/2 top-1/2'
+                style={{ willChange: 'transform, opacity' }}
+              >
+                <div
+                  className='group relative overflow-hidden'
+                  style={{ width: `${CARD_VW}vw` }}
+                >
+                  <img
+                    src={card.image} alt=""
+                    className='w-full h-auto block pointer-events-none'
+                    draggable={false}
+                  />
+                  <img
+                    src={card.hoverImage} alt=""
+                    className='absolute inset-0 w-full h-full object-cover pointer-events-none
+                      translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out'
+                    draggable={false}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Mobile carousel ── */}
+          <div
+            ref={mobileListRef}
+            className='sm:hidden w-full overflow-hidden cursor-grab active:cursor-grabbing'
+            onMouseDown={onMobileDown}
+            onMouseMove={onMobileMove}
+            onMouseUp={onMobileUp}
+            onMouseLeave={onMobileUp}
           >
             <div
-              className='flex items-center gap-4 sm:gap-[1.04vw]'
+              className='flex items-center gap-4'
               style={{
-                transform:  `translateX(${offset + dragOffset}px)`,
+                transform:  `translateX(${mobileOffset + mobileDragOffset}px)`,
                 transition: isGrabbing ? 'none' : 'transform 0.5s cubic-bezier(0.77, 0, 0.175, 1)',
                 userSelect: 'none',
                 willChange: 'transform',
               }}
             >
               {CARDS.map((card, i) => {
-                const dist  = Math.abs(i - activeIndex);
+                const dist  = Math.abs(i - mobileIndex);
                 const scale = dist === 0 ? 1 : dist === 1 ? 0.87 : 0.77;
                 return (
                   <div
                     key={card.id}
-                    className={`flex-shrink-0 relative overflow-hidden group select-none
-                      w-[197px] h-[219px] sm:w-[15.63vw] sm:h-auto
-                      ${dist !== 0 ? 'opacity-40 sm:opacity-100' : ''}`}
+                    className={`flex-shrink-0 relative overflow-hidden group
+                      w-[197px] h-[219px]
+                      ${dist !== 0 ? 'opacity-40' : ''}`}
                     style={{
                       transform:       `scale(${scale})`,
                       transition:      'transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s',
                       transformOrigin: 'center center',
                     }}
                   >
-                    {/* 기본 이미지 */}
                     <img
-                      src={card.image} alt={card.title}
+                      src={card.image} alt=""
                       className='w-full h-auto block pointer-events-none'
-                      draggable={false}
-                    />
-
-                    {/* 호버 이미지 — 아래에서 위로 슬라이드 (데스크탑만) */}
-                    <img
-                      src={card.hoverImage} alt=""
-                      className='hidden sm:block absolute inset-0 w-full h-full object-cover pointer-events-none
-                        translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out'
                       draggable={false}
                     />
                   </div>
@@ -172,25 +309,24 @@ const Race = () => {
             </div>
           </div>
 
-          {/* 모바일 화살표 버튼 — 카드 영역에 오버레이 */}
+          {/* Mobile arrows */}
           <div
             className='sm:hidden absolute left-6 top-1/2 -translate-y-1/2 z-20 transition-opacity'
-            style={{ opacity: activeIndex === 0 ? 0.4 : 1, pointerEvents: activeIndex === 0 ? 'none' : 'auto' }}
-            onClick={() => setActiveIndex(i => Math.max(0, i - 1))}
+            style={{ opacity: mobileIndex === 0 ? 0.4 : 1, pointerEvents: mobileIndex === 0 ? 'none' : 'auto' }}
+            onClick={() => setMobileIndex(i => Math.max(0, i - 1))}
           >
             <ArrowLeft />
           </div>
           <div
-            className='sm:hidden absolute right-10 top-1/2 -translate-y-1/2 z-20 transition-opacity'
-            style={{ opacity: activeIndex === CARDS.length - 1 ? 0.4 : 1, pointerEvents: activeIndex === CARDS.length - 1 ? 'none' : 'auto' }}
-            onClick={() => setActiveIndex(i => Math.min(CARDS.length - 1, i + 1))}
+            className='sm:hidden absolute right-[39px] top-1/2 -translate-y-1/2 z-20 transition-opacity'
+            style={{ opacity: mobileIndex === CARDS.length - 1 ? 0.4 : 1, pointerEvents: mobileIndex === CARDS.length - 1 ? 'none' : 'auto' }}
+            onClick={() => setMobileIndex(i => Math.min(CARDS.length - 1, i + 1))}
           >
             <ArrowRight />
           </div>
 
         </div>
 
-        {/* MORE VIEW 버튼 */}
         <div className='flex justify-center'>
           <MoreView />
         </div>

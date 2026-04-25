@@ -17,7 +17,7 @@ const Header = () => {
     <>
       <header className="fixed top-0 left-0 w-full z-[999] flex flex-col">
         <div className="sm:hidden h-[44px] w-full" />
-        <div className="px-[5.21vw] py-[1.04vw] flex justify-between items-center">
+        <div className="px-[24px] py-[17px] sm:px-[5.21vw] sm:py-[1.04vw] flex justify-between items-center">
           <a href="/">
             <img className="w-[101px] lg:w-[160px] h-auto" src={Logo} alt="Mercedes-Benz Logo" />
           </a>
