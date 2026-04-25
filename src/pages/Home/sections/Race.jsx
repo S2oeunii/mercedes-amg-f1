@@ -179,9 +179,8 @@ const Race = () => {
   useLayoutEffect(() => {
     const compute = () => {
       if (!mobileListRef.current || window.innerWidth >= 640) return;
-      const containerW = mobileListRef.current.offsetWidth;
       const cardW = 197, gap = 16;
-      setMobileOffset(containerW / 2 - (mobileIndex * (cardW + gap) + cardW / 2));
+      setMobileOffset(window.innerWidth / 2 - (mobileIndex * (cardW + gap) + cardW / 2));
     };
     compute();
     window.addEventListener('resize', compute);
@@ -234,7 +233,7 @@ const Race = () => {
         </span>
 
         {/* 카드 영역 */}
-        <div className='relative sm:h-[20.93vw] mt-15 mb-[45px] sm:mt-[6.41vw] sm:mb-[1.61vw] -ml-6 sm:ml-0'>
+        <div className='relative sm:h-[20.93vw] mt-15 mb-[45px] sm:mt-[6.41vw] sm:mb-[1.61vw] -mx-6 sm:mx-0'>
 
           {/* ── Desktop 3D carousel: absolute, 100vw, escapes section padding ── */}
           <div
