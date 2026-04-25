@@ -25,7 +25,7 @@ const CARDS = [
 
 const TOTAL   = CARDS.length;
 const CARD_VW = 15.63;
-const GAP_VW  = 1.04;
+const GAP_VW  = 2.40;
 
 function lerp(keys, t) {
   if (t <= keys[0][0]) return keys[0][1];
@@ -39,11 +39,18 @@ function lerp(keys, t) {
   return keys[keys.length - 1][1];
 }
 
-const SCALE_KEYS   = [[0, 1.0], [1, 0.87], [2, 0.77]];
-const ROT_KEYS     = [[0, 0],   [1, 18],   [2, 32]];
-const OPACITY_KEYS = [[0, 1.0], [1, 0.7],  [2, 0.45]];
+const WIDTH_KEYS   = [[0, 15.63], [1, 16.41], [2, 18.85]];
+const ROT_KEYS     = [[0, 0],    [1, 18],    [2, 32]];
+// opacity를 3까지 연장 → absOffset 2→3 구간에서 서서히 페이드아웃
+// (visibility:hidden 대신 사용해 GPU 레이어를 유지, 이미지 재업로드 지연 방지)
+const OPACITY_KEYS = [[0, 1.0], [1, 0.6], [2, 0.3], [3, 0.0]];
 
-// Lightweight spring: returns a cancel fn
+const GAP_OUTER_VW = 4.05;
+const _p1    = WIDTH_KEYS[0][1] / 2 + GAP_VW       + WIDTH_KEYS[1][1] / 2; // 18.42vw
+const _p2    = _p1 + WIDTH_KEYS[1][1] / 2 + GAP_OUTER_VW + WIDTH_KEYS[2][1] / 2; // 40.10vw
+const _step  = _p2 - _p1; // 21.68vw (offset 1→2 간격 유지)
+const POS_KEYS_VW = [[0, 0], [1, _p1], [2, _p2], [3, _p2 + _step], [4, _p2 + _step * 2]];
+
 function springTo(posRef, target, onUpdate) {
   let velocity = 0;
   const stiffness = 300;
@@ -71,10 +78,10 @@ function springTo(posRef, target, onUpdate) {
 
 const Race = () => {
   // ── Desktop ──
-  const posRef       = useRef(0);        // raw position value
+  const posRef       = useRef(0);
   const cancelAnim   = useRef(null);
   const itemRefs     = useRef([]);
-  const gapRef       = useRef(0);
+  const cardRefs     = useRef([]);
   const wheelBlock   = useRef(false);
   const isDragging   = useRef(false);
   const dragStartX   = useRef(0);
@@ -93,33 +100,33 @@ const Race = () => {
 
   // ── Desktop: apply transforms ──
   const updateItems = useCallback((pos) => {
-    const gap = gapRef.current;
+    const vw = window.innerWidth;
     itemRefs.current.forEach((el, i) => {
       if (!el) return;
       const offset    = i - pos;
       const absOffset = Math.abs(offset);
-      const scale   = lerp(SCALE_KEYS, absOffset);
+
+      const width   = lerp(WIDTH_KEYS, absOffset);
       const rotY    = -Math.sign(offset) * lerp(ROT_KEYS, absOffset);
       const opacity = lerp(OPACITY_KEYS, absOffset);
-      const x       = offset * gap;
-      el.style.transform = `translateX(calc(-50% + ${x}px)) translateY(-50%) rotateY(${rotY}deg) scale(${scale})`;
-      el.style.opacity   = String(opacity);
-      el.style.zIndex    = String(100 - Math.round(absOffset * 10));
+      const xPx     = Math.sign(offset) * lerp(POS_KEYS_VW, absOffset) * vw / 100;
+
+      el.style.transform     = `translateX(calc(-50% + ${xPx}px)) translateY(-50%) rotateY(${rotY}deg)`;
+      el.style.opacity       = String(opacity);
+      el.style.zIndex        = String(100 - Math.round(absOffset * 10));
+      el.style.pointerEvents = opacity < 0.01 ? 'none' : '';
+
+      const cardEl = cardRefs.current[i];
+      if (cardEl) {
+        cardEl.style.width = `${width}vw`;
+        cardEl.classList.toggle('group', Math.round(pos) === i);
+      }
     });
   }, []);
 
   useEffect(() => {
-    const calcGap = () => {
-      const vw = window.innerWidth;
-      return (vw * CARD_VW) / 100 + (vw * GAP_VW) / 100;
-    };
-    gapRef.current = calcGap();
     updateItems(posRef.current);
-
-    const onResize = () => {
-      gapRef.current = calcGap();
-      updateItems(posRef.current);
-    };
+    const onResize = () => updateItems(posRef.current);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, [updateItems]);
@@ -156,8 +163,9 @@ const Race = () => {
   };
   const onDesktopMove = (e) => {
     if (!isDragging.current) return;
+    const stepPx = POS_KEYS_VW[1][1] * window.innerWidth / 100;
     const dx     = e.clientX - dragStartX.current;
-    const newPos = dragStartPos.current - dx / gapRef.current;
+    const newPos = dragStartPos.current - dx / stepPx;
     posRef.current = Math.max(0, Math.min(TOTAL - 1, newPos));
     updateItems(posRef.current);
   };
@@ -214,7 +222,7 @@ const Race = () => {
     <div className='bg-[linear-gradient(to_bottom,#000000db_0%,#00000033_100%)]
       sm:bg-[linear-gradient(to_bottom,#000000c7_0%,#00000033_100%)]
       relative py-25 lg:pt-[9.38vw] lg:pb-[10.42vw] px-6 sm:px-[14.58vw]
-      w-full h-[583px] sm:h-[52.97vw] flex flex-col overflow-hidden'
+      w-full flex flex-col overflow-hidden'
     >
       <img src={bgPattern} className="absolute left-0 top-0 w-full h-auto hidden sm:block pointer-events-none" />
       <img src={mobileBg}  className="absolute left-0 top-0 w-full h-auto sm:hidden pointer-events-none" />
@@ -226,13 +234,17 @@ const Race = () => {
         </span>
 
         {/* 카드 영역 */}
-        <div className='relative w-screen sm:h-[23.65vw] mt-15 mb-[45px] sm:mt-[6.41vw] sm:mb-[1.61vw] -ml-6 sm:-ml-[14.58vw]'>
+        <div className='relative sm:h-[20.93vw] mt-15 mb-[45px] sm:mt-[6.41vw] sm:mb-[1.61vw] -ml-6 sm:ml-0'>
 
-          {/* ── Desktop 3D carousel ── */}
+          {/* ── Desktop 3D carousel: absolute, 100vw, escapes section padding ── */}
           <div
             ref={trackRef}
-            className='hidden sm:block relative w-full h-full cursor-grab active:cursor-grabbing select-none'
-            style={{ perspective: '62.5vw' }}
+            className='hidden sm:block absolute top-0 h-full cursor-grab active:cursor-grabbing select-none'
+            style={{
+              left:        'calc(-14.58vw)',
+              width:       '100vw',
+              perspective: '62.5vw',
+            }}
             onMouseDown={onDesktopDown}
             onMouseMove={onDesktopMove}
             onMouseUp={onDesktopUp}
@@ -246,7 +258,8 @@ const Race = () => {
                 style={{ willChange: 'transform, opacity' }}
               >
                 <div
-                  className='group relative overflow-hidden'
+                  ref={(el) => { cardRefs.current[i] = el; }}
+                  className='relative overflow-hidden'
                   style={{ width: `${CARD_VW}vw` }}
                 >
                   <img
