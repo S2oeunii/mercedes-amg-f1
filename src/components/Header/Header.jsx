@@ -3,7 +3,7 @@ import Logo from '../../assets/logo/header-logo.svg';
 import NavIcon from '../../assets/icons/nav.svg';
 
 const navItems = [
-  { label: 'TEAM',     to: '/team' },
+  { label: 'TEAM',     to: '/team', reload: true },
   { label: 'CAR',      to: '/' },
   { label: 'RACE',     to: '/' },
   { label: 'PARTNERS', to: '/' },
@@ -22,7 +22,7 @@ const Header = ({ menuOpen: isOpen, setMenuOpen: setIsOpen }) => {
 
           {/* 데스크탑 nav */}
           <ul className="hidden sm:flex gap-[2.6vw] font-archivo font-semibold text-[24px] leading-none tracking-[-0.01em]">
-            {navItems.map(({ label, to }) => (
+            {navItems.map(({ label, to, reload }) => (
               <li
                 key={label}
                 className="list-none py-[0.1vw] relative
@@ -32,7 +32,10 @@ const Header = ({ menuOpen: isOpen, setMenuOpen: setIsOpen }) => {
                   after:transition-[width] after:duration-300 after:ease-out
                   hover:after:w-full"
               >
-                <Link to={to} className="text-white">{label}</Link>
+                {reload
+                  ? <a href={to} className="text-white">{label}</a>
+                  : <Link to={to} className="text-white">{label}</Link>
+                }
               </li>
             ))}
           </ul>
@@ -60,21 +63,36 @@ const Header = ({ menuOpen: isOpen, setMenuOpen: setIsOpen }) => {
           </button>
 
           <ul className="flex flex-col items-start gap-10 px-[5.21vw] w-full">
-            {navItems.map(({ label, to }) => (
+            {navItems.map(({ label, to, reload }) => (
               <li key={label} className="list-none">
-                <Link
-                  to={to}
-                  className="popup-nav-link text-[#00F4D0] sm:text-white font-archivo font-semibold text-[40px] leading-none tracking-[-0.01em]
-                    relative transition-colors duration-300
-                    after:content-[''] after:absolute after:left-0 after:bottom-[-0.3rem]
-                    after:w-0 after:h-[3px]
-                    after:bg-gradient-to-r after:from-[#00F4D0] after:to-[#C0C7CE]
-                    after:transition-[width] after:duration-300 after:ease-out
-                    sm:hover:after:w-full"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {label}
-                </Link>
+                {reload ? (
+                  <a
+                    href={to}
+                    className="popup-nav-link text-[#00F4D0] sm:text-white font-archivo font-semibold text-[40px] leading-none tracking-[-0.01em]
+                      relative transition-colors duration-300
+                      after:content-[''] after:absolute after:left-0 after:bottom-[-0.3rem]
+                      after:w-0 after:h-[3px]
+                      after:bg-gradient-to-r after:from-[#00F4D0] after:to-[#C0C7CE]
+                      after:transition-[width] after:duration-300 after:ease-out
+                      sm:hover:after:w-full"
+                  >
+                    {label}
+                  </a>
+                ) : (
+                  <Link
+                    to={to}
+                    className="popup-nav-link text-[#00F4D0] sm:text-white font-archivo font-semibold text-[40px] leading-none tracking-[-0.01em]
+                      relative transition-colors duration-300
+                      after:content-[''] after:absolute after:left-0 after:bottom-[-0.3rem]
+                      after:w-0 after:h-[3px]
+                      after:bg-gradient-to-r after:from-[#00F4D0] after:to-[#C0C7CE]
+                      after:transition-[width] after:duration-300 after:ease-out
+                      sm:hover:after:w-full"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

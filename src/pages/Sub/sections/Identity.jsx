@@ -4,7 +4,7 @@ const Identity = () => {
 
   return (
     <div className='px-6 py-[290px] md:pt-[15.99vw] md:pb-[16.04vw] md:pl-[28.39vw] md:pr-[28.44vw]
-        flex flex-col gap-[35px] sm:gap-[0.52vw] items-center justify-center text-center'
+        flex flex-col gap-[35px] sm:gap-[2.86vw] sm:gap-[0.52vw] items-center justify-center text-center'
     >
         <h1
           className='font-archivo font-black italic text-[clamp(46px,_5.21vw,_100px)] leading-none tracking-none

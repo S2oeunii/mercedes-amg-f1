@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import ArrowUp from '../../assets/icons/arrowUp.svg';
 import MobileBtn from '../../assets/icons/Mobile_TopScroll.svg';
 
 const ScrollUp = ({ menuOpen = false }) => {
+  const { pathname } = useLocation();
+  const isSubPage = pathname !== '/';
   const [showDesktop, setShowDesktop] = useState(false);
 
   useEffect(() => {
@@ -31,7 +34,7 @@ const ScrollUp = ({ menuOpen = false }) => {
           before:scale-y-0 before:origin-bottom
           hover:before:scale-y-100
           before:transition-transform before:duration-[300ms] before:ease-out
-          ${showDesktop ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+          ${isSubPage || showDesktop ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       >
         <img
           src={ArrowUp}
