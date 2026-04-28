@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ArrowUp from '../../assets/icons/arrowUp.svg';
 import MobileBtn from '../../assets/icons/Mobile_TopScroll.svg';
 
-const ScrollUp = () => {
+const ScrollUp = ({ menuOpen = false }) => {
   const [showDesktop, setShowDesktop] = useState(false);
 
   useEffect(() => {
@@ -42,8 +42,10 @@ const ScrollUp = () => {
 
       <button
         onClick={scrollToTop}
-        className='sm:hidden w-[45px] h-[45px] cursor-pointer
-          fixed bottom-[50px] right-6 z-[9999]'
+        className={`sm:hidden w-[45px] h-[45px] cursor-pointer
+          fixed bottom-[50px] right-6 z-[9999]
+          transition-opacity duration-300
+          ${menuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
       >
         <img
           src={MobileBtn}

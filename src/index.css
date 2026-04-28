@@ -16,6 +16,13 @@
     100% { top: 0%; }
   }
 
+  /* Identity h1 슬라이드인 */
+  --animate-slide-in-left: slideInLeft 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-80px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
   /* scan line 빛 애니메이션 */
   --animate-scan-light: scanLight 3.8s ease-in-out infinite;
   @keyframes scanLight {

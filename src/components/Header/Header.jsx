@@ -1,17 +1,15 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/logo/header-logo.svg';
 import NavIcon from '../../assets/icons/nav.svg';
 
 const navItems = [
-  { label: 'TEAM',     to: '/' },
+  { label: 'TEAM',     to: '/team' },
   { label: 'CAR',      to: '/' },
   { label: 'RACE',     to: '/' },
   { label: 'PARTNERS', to: '/' },
 ];
 
-const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const Header = ({ menuOpen: isOpen, setMenuOpen: setIsOpen }) => {
 
   return (
     <>
