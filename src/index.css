@@ -23,6 +23,13 @@
     to   { opacity: 1; transform: translateX(0); }
   }
 
+  /* Legacy ulDesc 텍스트 전환 */
+  --animate-fade-in: fadeIn 0.35s ease both;
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
   /* scan line 빛 애니메이션 */
   --animate-scan-light: scanLight 3.8s ease-in-out infinite;
   @keyframes scanLight {
