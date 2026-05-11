@@ -2,6 +2,7 @@ import React from 'react';
 import Identity from './sections/Identity';
 import Precision from './sections/Precision';
 import Legacy from './sections/Legacy';
+import Performance from './sections/Performance';
 
 const Team = () => {
   return (
@@ -9,6 +10,7 @@ const Team = () => {
       <Identity />
       <Precision />
       <Legacy />
+      <Performance />
     </div>
   );
 };

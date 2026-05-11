@@ -30,6 +30,13 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* Performance 무한 마퀴 */
+  --animate-marquee: marquee 18s linear infinite;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
   /* scan line 빛 애니메이션 */
   --animate-scan-light: scanLight 3.8s ease-in-out infinite;
   @keyframes scanLight {
