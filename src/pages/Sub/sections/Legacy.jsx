@@ -8,19 +8,24 @@ const data = [
 ]
 
 const Legacy = () => {
-  const ulRef    = useRef(null)
-  const thumbRef = useRef(null)
+  const ulRef        = useRef(null)
+  const thumbRef     = useRef(null)
+  const isDragging   = useRef(false)
+  const dragStartX   = useRef(0)
+  const dragScroll   = useRef(0)
+  const targetScroll = useRef(0)
+  const rafId        = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
 
   const updateThumb = useCallback(() => {
     const ul    = ulRef.current
     const thumb = thumbRef.current
     if (!ul || !thumb) return
-    const track      = thumb.parentElement
-    const trackWidth = track.clientWidth
-    const ratio      = ul.clientWidth / ul.scrollWidth
-    const thumbWidth = Math.max(trackWidth * ratio, 20)
-    const scrollable = ul.scrollWidth - ul.clientWidth
+    const track       = thumb.parentElement
+    const trackWidth  = track.clientWidth
+    const ratio       = ul.clientWidth / ul.scrollWidth
+    const thumbWidth  = Math.max(trackWidth * ratio, 20)
+    const scrollable  = ul.scrollWidth - ul.clientWidth
     const scrollRatio = scrollable > 0 ? ul.scrollLeft / scrollable : 0
     thumb.style.width = `${thumbWidth}px`
     thumb.style.left  = `${scrollRatio * (trackWidth - thumbWidth)}px`
@@ -41,7 +46,77 @@ const Legacy = () => {
     updateThumb()
   }, [updateThumb])
 
-  // 썸 드래그로 ul 스크롤
+  /* ── 스크롤 이벤트 ── */
+  useEffect(() => {
+    const ul = ulRef.current
+    if (!ul) return
+    ul.addEventListener('scroll', handleScroll, { passive: true })
+    updateThumb()
+    return () => ul.removeEventListener('scroll', handleScroll)
+  }, [handleScroll, updateThumb])
+
+  /* ── 마우스 드래그 + 휠 가로 스크롤 ── */
+  useEffect(() => {
+    const ul = ulRef.current
+    if (!ul) return
+
+    const onMouseDown = (e) => {
+      isDragging.current = true
+      dragStartX.current = e.clientX
+      dragScroll.current = ul.scrollLeft
+      ul.style.cursor = 'grabbing'
+      ul.style.scrollSnapType = 'none'
+      document.body.style.userSelect = 'none'
+    }
+
+    const onMouseMove = (e) => {
+      if (!isDragging.current) return
+      ul.scrollLeft = dragScroll.current - (e.clientX - dragStartX.current)
+    }
+
+    const onMouseUp = () => {
+      if (!isDragging.current) return
+      isDragging.current = false
+      ul.style.cursor = ''
+      ul.style.scrollSnapType = ''
+      document.body.style.userSelect = ''
+    }
+
+    // 세로 휠 → 부드러운 가로 스크롤 (RAF lerp)
+    const animateScroll = () => {
+      const diff = targetScroll.current - ul.scrollLeft
+      if (Math.abs(diff) < 0.5) {
+        ul.scrollLeft = targetScroll.current
+        rafId.current = null
+        return
+      }
+      ul.scrollLeft += diff * 0.1
+      rafId.current = requestAnimationFrame(animateScroll)
+    }
+
+    const onWheel = (e) => {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return
+      e.preventDefault()
+      const max = ul.scrollWidth - ul.clientWidth
+      targetScroll.current = Math.max(0, Math.min(max, targetScroll.current + e.deltaY * 1.5))
+      if (!rafId.current) rafId.current = requestAnimationFrame(animateScroll)
+    }
+
+    ul.addEventListener('mousedown', onMouseDown)
+    document.addEventListener('mousemove', onMouseMove)
+    document.addEventListener('mouseup', onMouseUp)
+    ul.addEventListener('wheel', onWheel, { passive: false })
+
+    return () => {
+      ul.removeEventListener('mousedown', onMouseDown)
+      document.removeEventListener('mousemove', onMouseMove)
+      document.removeEventListener('mouseup', onMouseUp)
+      ul.removeEventListener('wheel', onWheel)
+      if (rafId.current) cancelAnimationFrame(rafId.current)
+    }
+  }, [])
+
+  /* ── 모바일 커스텀 스크롤바 썸 드래그 ── */
   const handleThumbMouseDown = useCallback((e) => {
     e.preventDefault()
     const ul    = ulRef.current
@@ -52,30 +127,18 @@ const Legacy = () => {
     const startScrollLeft = ul.scrollLeft
 
     const onMove = (moveEvent) => {
-      const track       = thumb.parentElement
-      const trackWidth  = track.clientWidth
-      const thumbWidth  = parseFloat(thumb.style.width) || 0
-      const scrollable  = ul.scrollWidth - ul.clientWidth
-      const dx          = moveEvent.clientX - startX
-      ul.scrollLeft = startScrollLeft + (dx / (trackWidth - thumbWidth)) * scrollable
+      const trackWidth = thumb.parentElement.clientWidth
+      const thumbWidth = parseFloat(thumb.style.width) || 0
+      const scrollable = ul.scrollWidth - ul.clientWidth
+      ul.scrollLeft = startScrollLeft + ((moveEvent.clientX - startX) / (trackWidth - thumbWidth)) * scrollable
     }
-
     const onUp = () => {
       document.removeEventListener('mousemove', onMove)
       document.removeEventListener('mouseup', onUp)
     }
-
     document.addEventListener('mousemove', onMove)
     document.addEventListener('mouseup', onUp)
   }, [])
-
-  useEffect(() => {
-    const ul = ulRef.current
-    if (!ul) return
-    ul.addEventListener('scroll', handleScroll, { passive: true })
-    updateThumb()
-    return () => ul.removeEventListener('scroll', handleScroll)
-  }, [handleScroll, updateThumb])
 
   const { title, count } = data[activeIndex]
 
@@ -114,15 +177,16 @@ const Legacy = () => {
           </p>
         </div>
 
-        {/* ul + 모바일 커스텀 스크롤바 — flex-1 min-w-0으로 데스크탑에서 남은 공간을 가져 스크롤 가능 */}
+        {/* ul + 모바일 커스텀 스크롤바 */}
         <div className='flex flex-col flex-1 min-w-0'>
           <ul
             ref={ulRef}
-            className='flex gap-5 sm:gap-[2.08vw] sm:pr-[8.59vw] overflow-x-auto scrollbar-hide snap-x snap-mandatory'
+            className='flex gap-5 sm:gap-[2.08vw] sm:pr-[8.59vw]
+              overflow-x-auto scrollbar-hide snap-x snap-mandatory cursor-grab'
           >
             {data.map(({ img }, i) => (
               <li key={i} className='w-[345px] sm:w-[34.90vw] shrink-0 snap-start'>
-                <img className='w-full h-auto' src={img} alt='' />
+                <img className='w-full h-auto pointer-events-none' src={img} alt='' draggable='false' />
               </li>
             ))}
           </ul>

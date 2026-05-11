@@ -43,7 +43,7 @@ const Precision = () => {
   }, [])
 
   return (
-    <>
+    <div className='overflow-x-hidden'>
       <div
         ref={sectionRef}
         className='relative flex flex-col gap-[140px] items-center justify-center
@@ -109,7 +109,7 @@ const Precision = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
